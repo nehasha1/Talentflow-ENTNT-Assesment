@@ -39,3 +39,23 @@ export const submitAssessmentResponse = async (jobId: string, responses: Record<
   }));
   return { success: true };
 };
+
+// Dashboard statistics functions
+export const getAssessmentStatistics = async () => {
+  const allAssessments = await assessmentsDb.assessments.toArray();
+  
+  // Count completed assessments (those with responses in localStorage)
+  let completedCount = 0;
+  for (const assessment of allAssessments) {
+    const response = localStorage.getItem(`assessment-response-${assessment.jobId}`);
+    if (response) {
+      completedCount++;
+    }
+  }
+  
+  return {
+    totalAssessments: allAssessments.length,
+    completedAssessments: completedCount,
+    pendingAssessments: allAssessments.length - completedCount
+  };
+};

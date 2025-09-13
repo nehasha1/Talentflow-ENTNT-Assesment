@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { getAllJobs, createJob, updateJob, reorderJob, getAllCompanies } from '../db/jobsDb';
+import { getAllJobs, createJob, updateJob, reorderJob, getAllCompanies, deleteJob } from '../db/jobsDb';
 import { delay, maybeFail } from '../../utils/latency';
 
 export const jobsHandlers = [
@@ -55,5 +55,13 @@ export const jobsHandlers = [
     const reorderData = await request.json() as any;
     const updatedJob = await reorderJob(params.id as string, reorderData);
     return HttpResponse.json(updatedJob);
+  }),
+
+  http.delete('/jobs/:id', async ({ params }) => {
+    await delay();
+    maybeFail();
+    
+    await deleteJob(params.id as string);
+    return new HttpResponse(null, { status: 204 });
   }),
 ];

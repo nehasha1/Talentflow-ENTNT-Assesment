@@ -101,9 +101,26 @@ export const reorderJob = async (id: string, data: { fromOrder: number; toOrder:
   return jobsDb.jobs.get(id);
 };
 
+export const deleteJob = async (id: string) => {
+  await jobsDb.jobs.delete(id);
+  return true;
+};
+
 // Helper function to get all unique companies for filter dropdown
 export const getAllCompanies = async () => {
   const jobs = await jobsDb.jobs.toArray();
   const companies = [...new Set(jobs.map(job => job.company))].sort();
   return companies;
+};
+
+// Dashboard statistics functions
+export const getJobStatistics = async () => {
+  const allJobs = await jobsDb.jobs.toArray();
+  const activeJobs = allJobs.filter(job => job.status === 'active');
+  
+  return {
+    totalJobs: allJobs.length,
+    activeJobs: activeJobs.length,
+    archivedJobs: allJobs.length - activeJobs.length
+  };
 };

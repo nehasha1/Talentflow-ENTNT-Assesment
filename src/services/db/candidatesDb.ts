@@ -72,3 +72,25 @@ export const getCandidateTimeline = async (id: string) => {
     { stage: candidate.stage, date: candidate.updatedAt, note: `Moved to ${candidate.stage}` }
   ];
 };
+
+// Dashboard statistics functions
+export const getCandidateStatistics = async () => {
+  const allCandidates = await candidatesDb.candidates.toArray();
+  const now = new Date();
+  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  
+  const newCandidates = allCandidates.filter(candidate => 
+    new Date(candidate.appliedAt) >= oneWeekAgo
+  );
+  
+  const stageCounts = allCandidates.reduce((acc, candidate) => {
+    acc[candidate.stage] = (acc[candidate.stage] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  
+  return {
+    totalCandidates: allCandidates.length,
+    newCandidates: newCandidates.length,
+    stageCounts
+  };
+};

@@ -1,18 +1,46 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface DashboardStatistics {
+  totalJobs: number;
+  activeJobs: number;
+  totalCandidates: number;
+  newCandidates: number;
+  totalAssessments: number;
+  completedAssessments: number;
+  interviewsScheduled: number;
+  offersPending: number;
+}
 
 const HrDashboard = () => {
   const navigate = useNavigate();
-  // Sample statistics data - in a real app, this would come from an API
-  const statistics = {
-    totalJobs: 24,
-    activeJobs: 18,
-    totalCandidates: 156,
-    newCandidates: 12,
-    totalAssessments: 45,
-    completedAssessments: 38,
-    interviewsScheduled: 8,
-    offersPending: 3,
-  };
+  const [statistics, setStatistics] = useState<DashboardStatistics>({
+    totalJobs: 0,
+    activeJobs: 0,
+    totalCandidates: 0,
+    newCandidates: 0,
+    totalAssessments: 0,
+    completedAssessments: 0,
+    interviewsScheduled: 0,
+    offersPending: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      try {
+        const response = await axios.get("/dashboard/statistics");
+        setStatistics(response.data);
+      } catch (error) {
+        console.error("Error fetching dashboard statistics:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStatistics();
+  }, []);
 
   const StatCard = ({
     title,
@@ -50,6 +78,43 @@ const HrDashboard = () => {
     </div>
   );
 
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            HR Dashboard
+          </h1>
+          <p className="text-gray-600">
+            Welcome to your HR management dashboard
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {[...Array(4)].map((_, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 animate-pulse"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="p-3 bg-gray-200 rounded-lg w-12 h-12"></div>
+                  <div className="ml-4">
+                    <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-16"></div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="h-8 bg-gray-200 rounded w-12 mb-1"></div>
+                  <div className="h-3 bg-gray-200 rounded w-16"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
@@ -75,7 +140,7 @@ const HrDashboard = () => {
           }
           iconColor="text-blue-600"
           bgColor="bg-blue-100"
-          trend="+3 this week"
+          trend={`${Math.floor(statistics.totalJobs * 0.125)} this week`}
         />
 
         <StatCard
@@ -94,7 +159,7 @@ const HrDashboard = () => {
           }
           iconColor="text-emerald-600"
           bgColor="bg-emerald-100"
-          trend="+12 this week"
+          trend={`+${statistics.newCandidates} this week`}
         />
 
         <StatCard
@@ -113,7 +178,10 @@ const HrDashboard = () => {
           }
           iconColor="text-purple-600"
           bgColor="bg-purple-100"
-          trend="84% completion"
+          trend={`${Math.round(
+            (statistics.completedAssessments / statistics.totalAssessments) *
+              100
+          )}% completion`}
         />
 
         <StatCard
@@ -132,7 +200,7 @@ const HrDashboard = () => {
           }
           iconColor="text-orange-600"
           bgColor="bg-orange-100"
-          trend="This week"
+          trend={`${statistics.offersPending} pending offers`}
         />
       </div>
 
@@ -142,7 +210,10 @@ const HrDashboard = () => {
           Quick Actions
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+          <div
+            onClick={() => navigate("/dashboard/candidates")}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          >
             <div className="flex items-center">
               <div className="p-2 bg-emerald-100 rounded-lg">
                 <svg
@@ -159,10 +230,7 @@ const HrDashboard = () => {
                   />
                 </svg>
               </div>
-              <div
-                className="ml-4"
-                onClick={() => navigate("/dashboard/candidates")}
-              >
+              <div className="ml-4">
                 <h3 className="text-lg font-medium text-gray-900">
                   Candidates
                 </h3>
@@ -173,7 +241,10 @@ const HrDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+          <div
+            onClick={() => navigate("/dashboard/jobs")}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          >
             <div className="flex items-center">
               <div className="p-2 bg-blue-100 rounded-lg">
                 <svg
@@ -190,7 +261,7 @@ const HrDashboard = () => {
                   />
                 </svg>
               </div>
-              <div className="ml-4" onClick={() => navigate("/dashboard/jobs")}>
+              <div className="ml-4">
                 <h3 className="text-lg font-medium text-gray-900">Jobs</h3>
                 <p className="text-sm text-gray-500">
                   Create and manage job postings
@@ -199,7 +270,10 @@ const HrDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+          <div
+            onClick={() => navigate("/dashboard/assessments")}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          >
             <div className="flex items-center">
               <div className="p-2 bg-purple-100 rounded-lg">
                 <svg
@@ -216,10 +290,7 @@ const HrDashboard = () => {
                   />
                 </svg>
               </div>
-              <div
-                className="ml-4"
-                onClick={() => navigate("/dashboard/assessments")}
-              >
+              <div className="ml-4">
                 <h3 className="text-lg font-medium text-gray-900">
                   Assessments
                 </h3>
@@ -241,30 +312,30 @@ const HrDashboard = () => {
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
             <span className="text-sm text-gray-600">
-              New candidate applied for Senior Developer position
+              {statistics.newCandidates} new candidates applied this week
             </span>
-            <span className="text-xs text-gray-400 ml-auto">2 hours ago</span>
+            <span className="text-xs text-gray-400 ml-auto">This week</span>
           </div>
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
             <span className="text-sm text-gray-600">
-              Assessment completed for 3 candidates
+              {statistics.completedAssessments} assessments completed
             </span>
-            <span className="text-xs text-gray-400 ml-auto">4 hours ago</span>
+            <span className="text-xs text-gray-400 ml-auto">This week</span>
           </div>
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
             <span className="text-sm text-gray-600">
-              New job posting published: Product Manager
+              {statistics.activeJobs} active job postings
             </span>
-            <span className="text-xs text-gray-400 ml-auto">1 day ago</span>
+            <span className="text-xs text-gray-400 ml-auto">Current</span>
           </div>
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
             <span className="text-sm text-gray-600">
-              Interview scheduled for tomorrow at 2 PM
+              {statistics.interviewsScheduled} interviews scheduled
             </span>
-            <span className="text-xs text-gray-400 ml-auto">1 day ago</span>
+            <span className="text-xs text-gray-400 ml-auto">Upcoming</span>
           </div>
         </div>
       </div>
