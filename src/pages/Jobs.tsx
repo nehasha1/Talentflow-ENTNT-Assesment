@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
+import type { Application } from "../types/applications";
+import { ensureApplicationsExist } from "../services/db/applicationsDb";
 import JobModal from "../components/Jobs/JobModal";
 
 interface JobsResponse {
@@ -14,6 +16,7 @@ interface JobsResponse {
 const Jobs: React.FC = () => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -43,8 +46,22 @@ const Jobs: React.FC = () => {
     }
   };
 
+  const fetchApplications = async () => {
+    try {
+      // First, ensure applications exist (auto-create from candidates if needed)
+      await ensureApplicationsExist();
+
+      // Then fetch applications
+      const response = await axios.get<Application[]>("/applications");
+      setApplications(response.data);
+    } catch (error) {
+      console.error("Error fetching applications:", error);
+    }
+  };
+
   useEffect(() => {
     fetchJobs();
+    fetchApplications();
   }, [search, statusFilter, currentPage, pageSize]);
 
   const handleSearch = (value: string) => {
@@ -78,6 +95,10 @@ const Jobs: React.FC = () => {
         console.error("Error deleting job:", error);
       }
     }
+  };
+
+  const getApplicationsForJob = (jobId: string) => {
+    return applications.filter((app) => app.jobId === jobId);
   };
 
   // TODO: Implement drag-and-drop reordering functionality
@@ -243,13 +264,37 @@ const Jobs: React.FC = () => {
                           </span>
                         ))}
                       </div>
+
+                      {/* Applications Count */}
+                      <div className="mt-3">
+                        <div className="flex items-center space-x-2 text-sm text-gray-600">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                            />
+                          </svg>
+                          <span>
+                            {getApplicationsForJob(job.id).length} applications
+                          </span>
+                        </div>
+                      </div>
                     </div>
                     <div className="flex items-center space-x-2 ml-4">
                       <button
-                        onClick={() => navigate(`/jobs/${job.id}`)}
+                        onClick={() =>
+                          navigate(`/dashboard/candidates?job=${job.id}`)
+                        }
                         className="text-emerald-600 hover:text-emerald-700 text-sm font-medium"
                       >
-                        View
+                        View Applications
                       </button>
                       <button
                         onClick={() => setEditingJob(job)}

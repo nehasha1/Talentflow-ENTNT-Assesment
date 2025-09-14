@@ -2,21 +2,19 @@ import { http, HttpResponse } from 'msw';
 import { getJobStatistics } from '../db/jobsDb';
 import { getCandidateStatistics } from '../db/candidatesDb';
 import { getAssessmentStatistics } from '../db/assessmentsDb';
+import { getApplicationStatistics } from '../db/applicationsDb';
 import { delay } from '../../utils/latency';
 
 export const dashboardHandlers = [
   http.get('/dashboard/statistics', async () => {
     await delay();
     
-    const [jobStats, candidateStats, assessmentStats] = await Promise.all([
+    const [jobStats, candidateStats, assessmentStats, applicationStats] = await Promise.all([
       getJobStatistics(),
       getCandidateStatistics(),
-      getAssessmentStatistics()
+      getAssessmentStatistics(),
+      getApplicationStatistics()
     ]);
-    
-    // Calculate mock interview and offer statistics
-    const interviewsScheduled = Math.floor(Math.random() * 10) + 5;
-    const offersPending = Math.floor(Math.random() * 5) + 1;
     
     const statistics = {
       totalJobs: jobStats.totalJobs,
@@ -25,8 +23,10 @@ export const dashboardHandlers = [
       newCandidates: candidateStats.newCandidates,
       totalAssessments: assessmentStats.totalAssessments,
       completedAssessments: assessmentStats.completedAssessments,
-      interviewsScheduled,
-      offersPending
+      totalApplications: applicationStats.totalApplications,
+      interviewsScheduled: applicationStats.interview,
+      offersPending: applicationStats.offer,
+      hiredCandidates: applicationStats.hired
     };
     
     return HttpResponse.json(statistics);

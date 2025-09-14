@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import Button from "../components/ui/Button";
+import ApplicationModal from "../components/Jobs/ApplicationModal";
 
 const JobDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
-  const [applying, setApplying] = useState(false);
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -30,24 +31,15 @@ const JobDetails: React.FC = () => {
     }
   }, [id, navigate]);
 
-  const handleApply = async () => {
-    if (!job) return;
+  const handleApply = () => {
+    setShowApplicationModal(true);
+  };
 
-    setApplying(true);
-    try {
-      // Here you would typically send an application
-      // For now, we'll simulate the process
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Show success message or redirect to application form
-      alert(`Application submitted for ${job.title} at ${job.company}!`);
-      navigate("/jobs");
-    } catch (error) {
-      console.error("Error applying to job:", error);
-      alert("Failed to submit application. Please try again.");
-    } finally {
-      setApplying(false);
-    }
+  const handleApplicationSuccess = () => {
+    alert(
+      `Application submitted successfully for ${job?.title} at ${job?.company}!`
+    );
+    navigate("/jobs");
   };
 
   if (loading) {
@@ -204,35 +196,9 @@ const JobDetails: React.FC = () => {
                   variant="primary"
                   size="lg"
                   onClick={handleApply}
-                  disabled={applying}
                   className="w-full"
                 >
-                  {applying ? (
-                    <div className="flex items-center space-x-2">
-                      <svg
-                        className="animate-spin w-4 h-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      <span>Applying...</span>
-                    </div>
-                  ) : (
-                    "Apply Now"
-                  )}
+                  Apply Now
                 </Button>
               </div>
             </div>
@@ -265,20 +231,23 @@ const JobDetails: React.FC = () => {
                   Click the "Apply Now" button above to submit your application
                   for this position.
                 </p>
-                <Button
-                  variant="primary"
-                  onClick={handleApply}
-                  disabled={applying}
-                >
-                  {applying
-                    ? "Submitting Application..."
-                    : "Submit Application"}
+                <Button variant="primary" onClick={handleApply}>
+                  Submit Application
                 </Button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Application Modal */}
+      {showApplicationModal && job && (
+        <ApplicationModal
+          job={job}
+          onClose={() => setShowApplicationModal(false)}
+          onSuccess={handleApplicationSuccess}
+        />
+      )}
     </div>
   );
 };

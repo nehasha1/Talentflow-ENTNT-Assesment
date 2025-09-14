@@ -9,8 +9,10 @@ interface DashboardStatistics {
   newCandidates: number;
   totalAssessments: number;
   completedAssessments: number;
+  totalApplications: number;
   interviewsScheduled: number;
   offersPending: number;
+  hiredCandidates: number;
 }
 
 const HrDashboard = () => {
@@ -22,8 +24,10 @@ const HrDashboard = () => {
     newCandidates: 0,
     totalAssessments: 0,
     completedAssessments: 0,
+    totalApplications: 0,
     interviewsScheduled: 0,
     offersPending: 0,
+    hiredCandidates: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -143,7 +147,7 @@ const HrDashboard = () => {
           trend={`${Math.floor(statistics.totalJobs * 0.125)} this week`}
         />
 
-        <StatCard
+        {/* <StatCard
           title="Total Candidates"
           value={statistics.totalCandidates}
           subtitle={`${statistics.newCandidates} new this week`}
@@ -160,6 +164,24 @@ const HrDashboard = () => {
           iconColor="text-emerald-600"
           bgColor="bg-emerald-100"
           trend={`+${statistics.newCandidates} this week`}
+        /> */}
+        <StatCard
+          title="Total candidates"
+          value={statistics.totalApplications}
+          subtitle={`${statistics.hiredCandidates} hired`}
+          icon={
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+          }
+          iconColor="text-green-600"
+          bgColor="bg-green-100"
+          trend={`${statistics.hiredCandidates} hired`}
         />
 
         <StatCard
