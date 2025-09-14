@@ -24,6 +24,7 @@ const Jobs: React.FC = () => {
   const [pageSize] = useState(10);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingJob, setEditingJob] = useState<Job | null>(null);
+  const [draggedJob, setDraggedJob] = useState<Job | null>(null);
 
   const fetchJobs = async () => {
     try {
@@ -101,26 +102,50 @@ const Jobs: React.FC = () => {
     return candidates.filter((candidate) => candidate.jobId === jobId);
   };
 
-  // TODO: Implement drag-and-drop reordering functionality
-  // const handleReorder = async (fromIndex: number, toIndex: number) => {
-  //   const newJobs = [...jobs];
-  //   const [movedJob] = newJobs.splice(fromIndex, 1);
-  //   newJobs.splice(toIndex, 0, movedJob);
+  const handleReorder = async (fromIndex: number, toIndex: number) => {
+    const newJobs = [...jobs];
+    const [movedJob] = newJobs.splice(fromIndex, 1);
+    newJobs.splice(toIndex, 0, movedJob);
 
-  //   // Optimistic update
-  //   setJobs(newJobs);
+    // Optimistic update
+    setJobs(newJobs);
 
-  //   try {
-  //     await axios.patch(`/jobs/${movedJob.id}/reorder`, {
-  //       fromOrder: fromIndex,
-  //       toOrder: toIndex,
-  //     });
-  //   } catch (error) {
-  //     console.error("Error reordering jobs:", error);
-  //     // Rollback on failure
-  //     fetchJobs();
-  //   }
-  // };
+    try {
+      await axios.patch(`/jobs/${movedJob.id}/reorder`, {
+        fromOrder: fromIndex,
+        toOrder: toIndex,
+      });
+    } catch (error) {
+      console.error("Error reordering jobs:", error);
+      // Rollback on failure
+      fetchJobs();
+    }
+  };
+
+  const handleDragStart = (e: React.DragEvent, job: Job) => {
+    setDraggedJob(job);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault();
+
+    if (!draggedJob) return;
+
+    const draggedIndex = jobs.findIndex((job) => job.id === draggedJob.id);
+    if (draggedIndex === -1 || draggedIndex === targetIndex) {
+      setDraggedJob(null);
+      return;
+    }
+
+    handleReorder(draggedIndex, targetIndex);
+    setDraggedJob(null);
+  };
 
   const totalPages = Math.ceil(totalJobs / pageSize);
 
@@ -248,63 +273,81 @@ const Jobs: React.FC = () => {
         ) : (
           <>
             <div className="divide-y divide-gray-200">
-              {jobs.map((job) => (
+              {jobs.map((job, index) => (
                 <div
                   key={job.id}
-                  className="p-6 hover:bg-gray-50 transition-colors duration-200"
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, job)}
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, index)}
+                  className={`p-6 hover:bg-gray-50 transition-colors duration-200 cursor-move ${
+                    draggedJob?.id === job.id ? "opacity-50" : ""
+                  }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-lg font-medium text-gray-900">
-                          {job.title}
-                        </h3>
-                        <span
-                          className={`px-2 py-1 text-xs font-medium rounded-full ${
-                            job.status === "active"
-                              ? "bg-emerald-100 text-emerald-800"
-                              : "bg-gray-100 text-gray-800"
-                          }`}
+                    <div className="flex items-center space-x-3">
+                      <div className="text-gray-400 cursor-move">
+                        <svg
+                          className="w-5 h-5"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
                         >
-                          {job.status}
-                        </span>
+                          <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+                        </svg>
                       </div>
-                      <p className="text-sm text-gray-600 mb-2">
-                        {job.location}
-                      </p>
-                      <p className="text-sm text-gray-500 mb-3">
-                        {job.description.substring(0, 150)}...
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {job.tags.map((tag) => (
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <h3 className="text-lg font-medium text-gray-900">
+                            {job.title}
+                          </h3>
                           <span
-                            key={tag}
-                            className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                            className={`px-2 py-1 text-xs font-medium rounded-full ${
+                              job.status === "active"
+                                ? "bg-emerald-100 text-emerald-800"
+                                : "bg-gray-100 text-gray-800"
+                            }`}
                           >
-                            {tag}
+                            {job.status}
                           </span>
-                        ))}
-                      </div>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-2">
+                          {job.location}
+                        </p>
+                        <p className="text-sm text-gray-500 mb-3">
+                          {job.description.substring(0, 150)}...
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {job.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
 
-                      {/* Applications Count */}
-                      <div className="mt-3">
-                        <div className="flex items-center space-x-2 text-sm text-gray-600">
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-                            />
-                          </svg>
-                          <span>
-                            {getApplicationsForJob(job.id).length} applications
-                          </span>
+                        {/* Applications Count */}
+                        <div className="mt-3">
+                          <div className="flex items-center space-x-2 text-sm text-gray-600">
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                              />
+                            </svg>
+                            <span>
+                              {getApplicationsForJob(job.id).length}{" "}
+                              applications
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -8,6 +8,7 @@ import Assessments from "./pages/Assessments";
 import AssessmentBuilder from "./pages/AssessmentBuilder";
 import AssessmentPreview from "./pages/AssessmentPreview";
 import AssessmentResults from "./pages/AssessmentResults";
+import CandidateProfile from "./pages/CandidateProfile";
 import HrLayout from "./components/layout/HrLayout";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -36,6 +37,7 @@ function App() {
         path="/assessments/results/:jobId"
         element={<AssessmentResults />}
       />
+      <Route path="/candidates/:id" element={<CandidateProfile />} />
     </Routes>
   );
 }

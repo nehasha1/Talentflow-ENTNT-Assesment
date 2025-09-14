@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import type { Candidate } from "../services/seed/candidateSeed";
 import type { Job } from "../services/seed/jobsSeed";
+import NotesWithMentions from "../components/NotesWithMentions";
 
 const Candidates: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +16,13 @@ const Candidates: React.FC = () => {
   const [draggedCandidate, setDraggedCandidate] = useState<Candidate | null>(
     null
   );
+  const [search, setSearch] = useState("");
+  const [stageFilter, setStageFilter] = useState("");
+  const [showNotesModal, setShowNotesModal] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(
+    null
+  );
+  const [quickNote, setQuickNote] = useState("");
 
   const stages = [
     { id: "applied", name: "Applied", color: "bg-blue-100 text-blue-800" },
@@ -45,6 +53,14 @@ const Candidates: React.FC = () => {
         params.append("jobId", jobFilter);
       }
 
+      if (search) {
+        params.append("search", search);
+      }
+
+      if (stageFilter) {
+        params.append("stage", stageFilter);
+      }
+
       if (params.toString()) {
         url += `?${params.toString()}`;
       }
@@ -52,8 +68,6 @@ const Candidates: React.FC = () => {
       const response = await axios.get<{ data: Candidate[] }>(url);
 
       let filteredCandidates = response.data.data;
-
-      // No company filtering - show all candidates
 
       setCandidates(filteredCandidates);
     } catch (error) {
@@ -80,7 +94,7 @@ const Candidates: React.FC = () => {
     if (jobs && jobs.length > 0) {
       fetchCandidates();
     }
-  }, [jobFilter, jobs]);
+  }, [jobFilter, jobs, search, stageFilter]);
 
   const getCandidatesByStage = (stageId: string) => {
     return candidates.filter((candidate) => candidate.stage === stageId);
@@ -132,6 +146,31 @@ const Candidates: React.FC = () => {
     return new Date(date).toLocaleDateString();
   };
 
+  const handleAddNote = (candidate: Candidate) => {
+    setSelectedCandidate(candidate);
+    setQuickNote("");
+    setShowNotesModal(true);
+  };
+
+  const handleSaveNote = () => {
+    if (!selectedCandidate || !quickNote.trim()) return;
+
+    const noteWithTimestamp = `[${new Date().toLocaleString()}] ${quickNote}`;
+    const existingNotes =
+      localStorage.getItem(`candidate-notes-${selectedCandidate.id}`) || "";
+    const updatedNotes = existingNotes
+      ? `${existingNotes}\n\n${noteWithTimestamp}`
+      : noteWithTimestamp;
+
+    localStorage.setItem(
+      `candidate-notes-${selectedCandidate.id}`,
+      updatedNotes
+    );
+    setShowNotesModal(false);
+    setSelectedCandidate(null);
+    setQuickNote("");
+  };
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -180,6 +219,54 @@ const Candidates: React.FC = () => {
 
             <div className="text-sm text-gray-600">
               Total: {candidates.length} candidates
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search and Filter Controls */}
+      <div className="mb-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Search Candidates
+              </label>
+              <input
+                type="text"
+                placeholder="Search by name or email..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Filter by Stage
+              </label>
+              <select
+                value={stageFilter}
+                onChange={(e) => setStageFilter(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="">All Stages</option>
+                {stages.map((stage) => (
+                  <option key={stage.id} value={stage.id}>
+                    {stage.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-end">
+              <button
+                onClick={() => {
+                  setSearch("");
+                  setStageFilter("");
+                }}
+                className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Clear Filters
+              </button>
             </div>
           </div>
         </div>
@@ -262,19 +349,16 @@ const Candidates: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <button
                         onClick={() => {
-                          // TODO: Open candidate details modal
-                          console.log("View candidate:", candidate.id);
+                          navigate(`/candidates/${candidate.id}`);
                         }}
                         className="text-xs text-emerald-600 hover:text-emerald-700 font-medium"
                       >
                         View Details
                       </button>
                       <button
-                        onClick={() => {
-                          // TODO: Add notes functionality
-                          console.log("Add notes:", candidate.id);
-                        }}
+                        onClick={() => handleAddNote(candidate)}
                         className="text-xs text-gray-600 hover:text-gray-700"
+                        title="Add Notes"
                       >
                         <svg
                           className="w-4 h-4"
@@ -304,6 +388,41 @@ const Candidates: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Notes Modal */}
+      {showNotesModal && selectedCandidate && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Add Note for {selectedCandidate.name}
+            </h3>
+            <NotesWithMentions
+              value={quickNote}
+              onChange={setQuickNote}
+              placeholder="Add a quick note... (use @ to mention team members)"
+              rows={4}
+            />
+            <div className="flex justify-end space-x-3 mt-4">
+              <button
+                onClick={() => {
+                  setShowNotesModal(false);
+                  setSelectedCandidate(null);
+                  setQuickNote("");
+                }}
+                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveNote}
+                className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+              >
+                Save Note
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
