@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import JobCard from "../common/JobCard";
 import Button from "../ui/Button";
 import axios from "axios";
@@ -6,22 +7,27 @@ import { type Job } from "../../services/seed/jobsSeed";
 import SimpleJobSkeleton from "../common/JobSkeleton";
 
 const JobExplore: React.FC = () => {
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [visibleJobs, setVisibleJobs] = useState(3);
+  const [visibleJobs, setVisibleJobs] = useState(5);
   const [selectedType, setSelectedType] = useState("All");
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        // console.log(
-        //   "JobExplore: Making request to /jobs?status=active&pageSize=6"
-        // );
-        const response = await axios.get("/jobs?status=active&pageSize=6");
-        // console.log("JobExplore: Response received:", response);
-        // console.log("JobExplore: Response data:", response.data);
+        // Fetch more jobs to ensure we have enough for sorting
+        const response = await axios.get("/jobs?status=active&pageSize=20");
 
-        setJobs(response.data.data);
+        // Sort jobs by createdAt date (newest first) and take the latest 5
+        const sortedJobs = response.data.data
+          .sort(
+            (a: Job, b: Job) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+          .slice(0, 5);
+
+        setJobs(sortedJobs);
       } catch (error) {
         console.error("JobExplore: Error fetching jobs:", error);
       } finally {
@@ -46,6 +52,10 @@ const JobExplore: React.FC = () => {
 
   const loadMore = () => {
     setVisibleJobs((prev) => Math.min(prev + 3, filteredJobs.length));
+  };
+
+  const handleBrowseAllJobs = () => {
+    navigate("/jobs");
   };
 
   if (loading) {
@@ -90,7 +100,7 @@ const JobExplore: React.FC = () => {
         </div>
 
         {/* Job Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
           {displayedJobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
@@ -147,7 +157,7 @@ const JobExplore: React.FC = () => {
             match through our platform.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" onClick={handleBrowseAllJobs}>
               Browse All Jobs
             </Button>
             <Button variant="outline" size="lg">

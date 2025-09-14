@@ -6,8 +6,8 @@ class JobsDB extends Dexie {
 
   constructor() {
     super('JobsDB');
-    this.version(1).stores({
-      jobs: '&id, slug, status, order, title, jobType, company' // Added company to index
+    this.version(2).stores({
+      jobs: '&id, slug, status, order, title, jobType, company, createdAt' // Added company and createdAt to index
     });
   }
 }
@@ -39,7 +39,7 @@ export const getAllJobs = async (params?: {
 }) => {
   // console.log("control 1");
   
-  let query = jobsDb.jobs.orderBy('order');
+  let query = jobsDb.jobs.orderBy('createdAt');
   
   if (params?.status) {
     query = query.filter(job => job.status === params.status);
@@ -81,10 +81,15 @@ export const getAllJobs = async (params?: {
   return { data: jobs, total: jobs.length };
 };
 
-export const createJob = async (jobData: Omit<Job, 'id' | 'createdAt'>) => {
+export const createJob = async (jobData: Omit<Job, 'id' | 'createdAt' | 'slug' | 'order'>) => {
+  const count = await jobsDb.jobs.count();
+  const slug = jobData.title.toLowerCase().replace(/\s+/g, '-') + '-' + Math.random().toString(36).substr(2, 4);
+
   const newJob: Job = {
     ...jobData,
     id: `job-${Date.now()}`,
+    slug,
+    order: count,
     createdAt: new Date()
   };
   await jobsDb.jobs.add(newJob);
