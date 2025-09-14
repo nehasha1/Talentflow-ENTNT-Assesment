@@ -211,6 +211,14 @@ const Assessments: React.FC = () => {
                       >
                         Preview
                       </button>
+                      <button
+                        onClick={() =>
+                          navigate(`/assessments/results/${assessment.jobId}`)
+                        }
+                        className="text-green-600 hover:text-green-700 text-sm font-medium"
+                      >
+                        View Results
+                      </button>
                     </div>
                   </div>
                 </div>

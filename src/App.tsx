@@ -5,6 +5,9 @@ import Jobs from "./pages/Jobs";
 import CandidateJobs from "./pages/CandidateJobs";
 import JobDetails from "./pages/JobDetails";
 import Assessments from "./pages/Assessments";
+import AssessmentBuilder from "./pages/AssessmentBuilder";
+import AssessmentPreview from "./pages/AssessmentPreview";
+import AssessmentResults from "./pages/AssessmentResults";
 import HrLayout from "./components/layout/HrLayout";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -21,6 +24,18 @@ function App() {
         <Route path="jobs" element={<Jobs />} />
         <Route path="assessments" element={<Assessments />} />
       </Route>
+      <Route
+        path="/assessments/builder/:jobId"
+        element={<AssessmentBuilder />}
+      />
+      <Route
+        path="/assessments/preview/:jobId"
+        element={<AssessmentPreview />}
+      />
+      <Route
+        path="/assessments/results/:jobId"
+        element={<AssessmentResults />}
+      />
     </Routes>
   );
 }

@@ -16,7 +16,7 @@ export interface Question {
   };
   conditionalOn?: {
     questionId: string;
-    value: string;
+    value: string | string[];
   };
 }
 
