@@ -20,7 +20,8 @@ const JobExplore: React.FC = () => {
         const response = await axios.get("/jobs?status=active&pageSize=20");
 
         // Sort jobs by createdAt date (newest first) and take the latest 5
-        const sortedJobs = response.data.data
+        const jobsData = response.data?.data || [];
+        const sortedJobs = jobsData
           .sort(
             (a: Job, b: Job) =>
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

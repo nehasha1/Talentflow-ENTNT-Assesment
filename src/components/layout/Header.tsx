@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             <Button
               variant="primary"
               size="md"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/hr-login")}
             >
               HR Login
             </Button>
@@ -93,7 +93,7 @@ const Header: React.FC = () => {
                   size="md"
                   className="w-full"
                   onClick={() => {
-                    navigate("/dashboard");
+                    navigate("/hr-login");
                     setIsMenuOpen(false);
                   }}
                 >

@@ -9,7 +9,6 @@ interface DashboardStatistics {
   newCandidates: number;
   totalAssessments: number;
   completedAssessments: number;
-  totalApplications: number;
   interviewsScheduled: number;
   offersPending: number;
   hiredCandidates: number;
@@ -24,7 +23,6 @@ const HrDashboard = () => {
     newCandidates: 0,
     totalAssessments: 0,
     completedAssessments: 0,
-    totalApplications: 0,
     interviewsScheduled: 0,
     offersPending: 0,
     hiredCandidates: 0,
@@ -123,7 +121,7 @@ const HrDashboard = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">HR Dashboard</h1>
-        <p className="text-gray-600">Welcome to your HR management dashboard</p>
+        <p className="text-gray-600">Welcome to your HR dashboard</p>
       </div>
 
       {/* Statistics Overview */}
@@ -167,7 +165,7 @@ const HrDashboard = () => {
         /> */}
         <StatCard
           title="Total candidates"
-          value={statistics.totalApplications}
+          value={statistics.totalCandidates}
           subtitle={`${statistics.hiredCandidates} hired`}
           icon={
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

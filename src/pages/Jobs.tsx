@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
-import type { Application } from "../types/applications";
-import { ensureApplicationsExist } from "../services/db/applicationsDb";
+// Applications are now handled by candidates
 import JobModal from "../components/Jobs/JobModal";
 
 interface JobsResponse {
@@ -16,7 +15,7 @@ interface JobsResponse {
 const Jobs: React.FC = () => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [applications, setApplications] = useState<Application[]>([]);
+  const [candidates, setCandidates] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -37,6 +36,8 @@ const Jobs: React.FC = () => {
           pageSize,
         },
       });
+
+      // Show all jobs (no company filtering)
       setJobs(response.data.data);
       setTotalJobs(response.data.total);
     } catch (error) {
@@ -46,22 +47,21 @@ const Jobs: React.FC = () => {
     }
   };
 
-  const fetchApplications = async () => {
+  const fetchCandidates = async () => {
     try {
-      // First, ensure applications exist (auto-create from candidates if needed)
-      await ensureApplicationsExist();
-
-      // Then fetch applications
-      const response = await axios.get<Application[]>("/applications");
-      setApplications(response.data);
+      const response = await axios.get("/candidates");
+      setCandidates(response.data.data || []);
     } catch (error) {
-      console.error("Error fetching applications:", error);
+      console.error("Error fetching candidates:", error);
+      setCandidates([]);
     }
   };
 
+  // Applications are now handled by candidates, so we don't need this function
+
   useEffect(() => {
     fetchJobs();
-    fetchApplications();
+    fetchCandidates();
   }, [search, statusFilter, currentPage, pageSize]);
 
   const handleSearch = (value: string) => {
@@ -98,7 +98,7 @@ const Jobs: React.FC = () => {
   };
 
   const getApplicationsForJob = (jobId: string) => {
-    return applications.filter((app) => app.jobId === jobId);
+    return candidates.filter((candidate) => candidate.jobId === jobId);
   };
 
   // TODO: Implement drag-and-drop reordering functionality
@@ -150,25 +150,46 @@ const Jobs: React.FC = () => {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Jobs</h1>
             <p className="text-gray-600">Create and manage your job postings</p>
           </div>
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => navigate("/dashboard/candidates")}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            <span>Create Job</span>
-          </button>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                />
+              </svg>
+              <span>View All Candidates</span>
+            </button>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <span>Create Job</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -178,7 +199,7 @@ const Jobs: React.FC = () => {
           <div className="flex-1">
             <input
               type="text"
-              placeholder="Search jobs by title, company, or tags..."
+              placeholder="Search jobs by title or tags..."
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
@@ -249,7 +270,7 @@ const Jobs: React.FC = () => {
                         </span>
                       </div>
                       <p className="text-sm text-gray-600 mb-2">
-                        {job.company} • {job.location}
+                        {job.location}
                       </p>
                       <p className="text-sm text-gray-500 mb-3">
                         {job.description.substring(0, 150)}...

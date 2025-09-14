@@ -22,10 +22,6 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
     }
   };
 
-  const getCompanyInitial = (company: string) => {
-    return company.charAt(0).toUpperCase();
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -41,10 +37,10 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   return (
     <Card className="hover:shadow-lg transition-all duration-300 border hover:border-emerald-200 cursor-pointer group">
       <div className="flex items-start space-x-4">
-        {/* Company Avatar */}
+        {/* Job Type Avatar */}
         <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
           <span className="text-white font-semibold text-lg">
-            {getCompanyInitial(job.company)}
+            {job.jobType?.charAt(0) || "J"}
           </span>
         </div>
 
@@ -55,7 +51,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
               <h3 className="font-semibold text-gray-900 text-lg group-hover:text-emerald-600 transition-colors">
                 {job.title}
               </h3>
-              <p className="text-gray-600 text-sm">{job.company}</p>
+              <p className="text-gray-600 text-sm">{job.jobType || "Job"}</p>
             </div>
             <div className="text-right">
               <p className="font-semibold text-gray-900">{job.salary}</p>

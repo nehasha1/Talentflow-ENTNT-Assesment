@@ -11,7 +11,6 @@ interface JobModalProps {
 const JobModal: React.FC<JobModalProps> = ({ job, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     title: job?.title || "",
-    company: job?.company || "",
     location: job?.location || "",
     jobType: job?.jobType as "Full-time" | "Remote" | "Part-time" | "Contract",
     salary: job?.salary || "",
@@ -29,10 +28,6 @@ const JobModal: React.FC<JobModalProps> = ({ job, onClose, onSave }) => {
 
     if (!formData.title.trim()) {
       newErrors.title = "Title is required";
-    }
-
-    if (!formData.company.trim()) {
-      newErrors.company = "Company is required";
     }
 
     if (!formData.description.trim()) {
@@ -120,26 +115,6 @@ const JobModal: React.FC<JobModalProps> = ({ job, onClose, onSave }) => {
                 />
                 {errors.title && (
                   <p className="text-red-500 text-xs mt-1">{errors.title}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Company *
-                </label>
-                <input
-                  type="text"
-                  value={formData.company}
-                  onChange={(e) =>
-                    setFormData({ ...formData, company: e.target.value })
-                  }
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent ${
-                    errors.company ? "border-red-300" : "border-gray-300"
-                  }`}
-                  placeholder="e.g., Tech Corp"
-                />
-                {errors.company && (
-                  <p className="text-red-500 text-xs mt-1">{errors.company}</p>
                 )}
               </div>
 

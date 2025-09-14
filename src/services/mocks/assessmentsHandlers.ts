@@ -23,7 +23,7 @@ export const assessmentsHandlers = [
     return HttpResponse.json(assessment);
   }),
 
-  http.put('/assessments/:jobId', async ({ params, request }) => {
+  http.put('/assessments/:jobId', async ({ request }) => {
     await delay();
     maybeFail();
     

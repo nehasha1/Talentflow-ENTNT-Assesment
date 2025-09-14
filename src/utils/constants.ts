@@ -1,4 +1,18 @@
-import type { FeatureItem, StatItem, Job } from '../types';
+import type { FeatureItem, StatItem } from '../types';
+
+// Local Job interface for sample data
+interface Job {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: 'Full-time' | 'Part-time' | 'Contract' | 'Remote';
+  salary: string;
+  description: string;
+  requirements: string[];
+  postedDate: string;
+  tags: string[];
+}
 
 // Navigation Links
 export const NAV_LINKS = [

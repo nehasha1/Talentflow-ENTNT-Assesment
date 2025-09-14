@@ -58,11 +58,12 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
 
     setLoading(true);
     try {
-      const applicationData = {
+      const candidateData = {
         jobId: job.id,
-        candidateName: formData.candidateName,
-        candidateEmail: formData.candidateEmail,
-        candidatePhone: formData.candidatePhone,
+        name: formData.candidateName,
+        email: formData.candidateEmail,
+        phone: formData.candidatePhone,
+        resume: "", // Will be set by the system
         coverLetter: formData.coverLetter,
         experience: formData.experience,
         education: formData.education,
@@ -70,10 +71,10 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
           .split(",")
           .map((s) => s.trim())
           .filter((s) => s),
-        status: "applied" as const,
+        stage: "applied" as const,
       };
 
-      await axios.post("/applications", applicationData);
+      await axios.post("/applications", candidateData);
       onSuccess();
       onClose();
     } catch (error) {
@@ -93,9 +94,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
               <h2 className="text-xl font-bold text-gray-900">
                 Apply for Position
               </h2>
-              <p className="text-gray-600">
-                {job.title} at {job.company}
-              </p>
+              <p className="text-gray-600">{job.title}</p>
             </div>
             <button
               onClick={onClose}

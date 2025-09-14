@@ -6,7 +6,7 @@ import CandidateJobs from "./pages/CandidateJobs";
 import JobDetails from "./pages/JobDetails";
 import Assessments from "./pages/Assessments";
 import HrLayout from "./components/layout/HrLayout";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/jobs" element={<CandidateJobs />} />
       <Route path="/jobs/:id" element={<JobDetails />} />
+      <Route path="/hr-login" element={<Navigate to="/dashboard" replace />} />
       <Route path="/dashboard" element={<HrLayout />}>
         <Route index element={<HrDashboard />} />
         <Route path="candidates" element={<Candidates />} />

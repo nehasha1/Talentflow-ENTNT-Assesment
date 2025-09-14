@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { initializeJobs } from "./services/db/jobsDb";
 import { initializeCandidates } from "./services/db/candidatesDb";
 import { initializeAssessments } from "./services/db/assessmentsDb";
-import { initializeApplications } from "./services/db/applicationsDb";
 
 const startApp = () => {
   createRoot(document.getElementById("root")!).render(
@@ -33,7 +32,6 @@ if (process.env.NODE_ENV === "development") {
           initializeJobs();
           initializeCandidates();
           initializeAssessments();
-          initializeApplications();
           // Start the app after MSW is ready
           startApp();
         })
@@ -45,6 +43,5 @@ if (process.env.NODE_ENV === "development") {
   initializeJobs();
   initializeCandidates();
   initializeAssessments();
-  initializeApplications();
   startApp();
 }

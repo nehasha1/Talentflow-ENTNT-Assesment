@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { getJobStatistics } from '../db/jobsDb';
 import { getCandidateStatistics } from '../db/candidatesDb';
 import { getAssessmentStatistics } from '../db/assessmentsDb';
-import { getApplicationStatistics } from '../db/applicationsDb';
+import { getApplicationStatistics } from '../db/candidatesDb';
 import { delay } from '../../utils/latency';
 
 export const dashboardHandlers = [

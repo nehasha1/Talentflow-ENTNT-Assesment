@@ -113,7 +113,7 @@ const Assessments: React.FC = () => {
                 onClick={() => setSelectedJob(job.id)}
               >
                 <h3 className="font-medium text-gray-900">{job.title}</h3>
-                <p className="text-sm text-gray-600">{job.company}</p>
+                <p className="text-sm text-gray-600">{job.jobType}</p>
                 <p className="text-xs text-gray-500 mt-1">{job.location}</p>
               </div>
             ))}
@@ -184,7 +184,7 @@ const Assessments: React.FC = () => {
                         </span>
                       </div>
                       <p className="text-sm text-gray-600 mb-2">
-                        {job?.company} • {job?.location}
+                        {job?.jobType} • {job?.location}
                       </p>
                       <p className="text-sm text-gray-500">
                         Total Questions:{" "}

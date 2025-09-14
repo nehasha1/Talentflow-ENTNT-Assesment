@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import JobCard from "../components/common/JobCard";
@@ -38,7 +38,8 @@ const CandidateJobs: React.FC = () => {
       });
 
       // Sort jobs by createdAt date (newest first)
-      const sortedJobs = response.data.data.sort(
+      const jobsData = response.data?.data || [];
+      const sortedJobs = jobsData.sort(
         (a: Job, b: Job) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
@@ -131,7 +132,7 @@ const CandidateJobs: React.FC = () => {
             <div className="flex-1">
               <input
                 type="text"
-                placeholder="Search jobs by title, company, or tags..."
+                placeholder="Search jobs by title or tags..."
                 value={search}
                 onChange={(e) => handleSearch(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"

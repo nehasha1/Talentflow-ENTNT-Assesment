@@ -6,8 +6,8 @@ class JobsDB extends Dexie {
 
   constructor() {
     super('JobsDB');
-    this.version(2).stores({
-      jobs: '&id, slug, status, order, title, jobType, company, createdAt' // Added company and createdAt to index
+    this.version(3).stores({
+      jobs: '&id, slug, status, order, title, jobType, createdAt'
     });
   }
 }
@@ -15,17 +15,19 @@ class JobsDB extends Dexie {
 export const jobsDb = new JobsDB();
 
 export const initializeJobs = async () => {
-  // console.log("initializeJobs: Starting job initialization");
-  const count = await jobsDb.jobs.count();
-  // console.log("initializeJobs: Current job count:", count);
-  if (count === 0) {
-    // console.log("initializeJobs: Seeding database with jobs");
-     await jobsDb.jobs.bulkAdd(jobsSeed);
-    // const res = await jobsDb.jobs.bulkAdd(jobsSeed);
-    // console.log("initializeJobs: Bulk add result:", res);
-    // console.log(`initializeJobs: Seeded ${jobsSeed.length} jobs`);
-  } else {
-    console.log("initializeJobs: Database already has jobs, skipping seed");
+  try {
+    console.log("initializeJobs: Starting job initialization");
+    
+    // Clear existing jobs to ensure fresh data without company field
+    console.log("initializeJobs: Clearing existing jobs for fresh seed");
+    await jobsDb.jobs.clear();
+    
+    console.log("initializeJobs: Seeding database with fresh jobs");
+    await jobsDb.jobs.bulkAdd(jobsSeed);
+    console.log(`initializeJobs: Seeded ${jobsSeed.length} jobs`);
+    
+  } catch (error) {
+    console.error("initializeJobs: Error initializing jobs:", error);
   }
 };
 
@@ -33,13 +35,13 @@ export const getAllJobs = async (params?: {
   search?: string;
   status?: string;
   jobType?: string;
-  company?: string; // Added company filter
   page?: number;
   pageSize?: number;
 }) => {
-  // console.log("control 1");
-  
-  let query = jobsDb.jobs.orderBy('createdAt');
+  try {
+    console.log("getAllJobs: Called with params:", params);
+    
+    let query = jobsDb.jobs.orderBy('createdAt');
   
   if (params?.status) {
     query = query.filter(job => job.status === params.status);
@@ -50,15 +52,10 @@ export const getAllJobs = async (params?: {
     query = query.filter(job => job.jobType === params.jobType);
   }
 
-  // Added company filtering
-  if (params?.company) {
-    query = query.filter(job => job.company === params.company);
-  }
   
   if (params?.search) {
     query = query.filter(job => 
       job.title.toLowerCase().includes(params.search!.toLowerCase()) ||
-      job.company.toLowerCase().includes(params.search!.toLowerCase()) || // Added company to search
       job.tags.some(tag => tag.toLowerCase().includes(params.search!.toLowerCase()))
     );
   }
@@ -75,10 +72,13 @@ export const getAllJobs = async (params?: {
       pageSize: params.pageSize
     };
   }
-  console.log(jobs);
-  console.log("control reached");
+  console.log("getAllJobs: Returning jobs:", jobs.length);
   
   return { data: jobs, total: jobs.length };
+  } catch (error) {
+    console.error("getAllJobs: Error fetching jobs:", error);
+    return { data: [], total: 0 };
+  }
 };
 
 export const createJob = async (jobData: Omit<Job, 'id' | 'createdAt' | 'slug' | 'order'>) => {
@@ -111,12 +111,6 @@ export const deleteJob = async (id: string) => {
   return true;
 };
 
-// Helper function to get all unique companies for filter dropdown
-export const getAllCompanies = async () => {
-  const jobs = await jobsDb.jobs.toArray();
-  const companies = [...new Set(jobs.map(job => job.company))].sort();
-  return companies;
-};
 
 // Dashboard statistics functions
 export const getJobStatistics = async () => {

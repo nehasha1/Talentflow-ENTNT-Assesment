@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import type { Application } from "../types/applications";
+import type { Candidate } from "../services/seed/candidateSeed";
 import type { Job } from "../services/seed/jobsSeed";
-import { ensureApplicationsExist } from "../services/db/applicationsDb";
 
 const Candidates: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const jobFilter = searchParams.get("job");
 
-  const [applications, setApplications] = useState<Application[]>([]);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [draggedApplication, setDraggedApplication] =
-    useState<Application | null>(null);
+  const [draggedCandidate, setDraggedCandidate] = useState<Candidate | null>(
+    null
+  );
 
   const stages = [
     { id: "applied", name: "Applied", color: "bg-blue-100 text-blue-800" },
@@ -33,26 +33,31 @@ const Candidates: React.FC = () => {
     { id: "hired", name: "Hired", color: "bg-emerald-100 text-emerald-800" },
   ];
 
-  const fetchApplications = async () => {
+  const fetchCandidates = async () => {
     try {
       setLoading(true);
 
-      // First, ensure applications exist (auto-create from candidates if needed)
-      const applicationsCreated = await ensureApplicationsExist();
-      if (applicationsCreated) {
-        console.log(
-          "fetchApplications: Applications were auto-created from candidates"
-        );
+      // Build URL with filters
+      let url = "/candidates";
+      const params = new URLSearchParams();
+
+      if (jobFilter) {
+        params.append("jobId", jobFilter);
       }
 
-      // Then fetch applications
-      const url = jobFilter
-        ? `/applications?jobId=${jobFilter}`
-        : "/applications";
-      const response = await axios.get<Application[]>(url);
-      setApplications(response.data);
+      if (params.toString()) {
+        url += `?${params.toString()}`;
+      }
+
+      const response = await axios.get<{ data: Candidate[] }>(url);
+
+      let filteredCandidates = response.data.data;
+
+      // No company filtering - show all candidates
+
+      setCandidates(filteredCandidates);
     } catch (error) {
-      console.error("Error fetching applications:", error);
+      console.error("Error fetching candidates:", error);
     } finally {
       setLoading(false);
     }
@@ -68,12 +73,17 @@ const Candidates: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchApplications();
     fetchJobs();
-  }, [jobFilter]);
+  }, []);
 
-  const getApplicationsByStage = (stageId: string) => {
-    return applications.filter((app) => app.status === stageId);
+  useEffect(() => {
+    if (jobs && jobs.length > 0) {
+      fetchCandidates();
+    }
+  }, [jobFilter, jobs]);
+
+  const getCandidatesByStage = (stageId: string) => {
+    return candidates.filter((candidate) => candidate.stage === stageId);
   };
 
   const getJobTitle = (jobId: string) => {
@@ -81,8 +91,8 @@ const Candidates: React.FC = () => {
     return job ? job.title : "Unknown Job";
   };
 
-  const handleDragStart = (e: React.DragEvent, application: Application) => {
-    setDraggedApplication(application);
+  const handleDragStart = (e: React.DragEvent, candidate: Candidate) => {
+    setDraggedCandidate(candidate);
     e.dataTransfer.effectAllowed = "move";
   };
 
@@ -94,28 +104,28 @@ const Candidates: React.FC = () => {
   const handleDrop = async (e: React.DragEvent, targetStage: string) => {
     e.preventDefault();
 
-    if (!draggedApplication || draggedApplication.status === targetStage) {
+    if (!draggedCandidate || draggedCandidate.stage === targetStage) {
       return;
     }
 
     try {
-      await axios.patch(`/applications/${draggedApplication.id}/status`, {
+      await axios.patch(`/applications/${draggedCandidate.id}/status`, {
         status: targetStage,
       });
 
       // Update local state
-      setApplications((prev) =>
-        prev.map((app) =>
-          app.id === draggedApplication.id
-            ? { ...app, status: targetStage as Application["status"] }
-            : app
+      setCandidates((prev) =>
+        prev.map((candidate) =>
+          candidate.id === draggedCandidate.id
+            ? { ...candidate, stage: targetStage as Candidate["stage"] }
+            : candidate
         )
       );
     } catch (error) {
-      console.error("Error updating application status:", error);
+      console.error("Error updating candidate status:", error);
     }
 
-    setDraggedApplication(null);
+    setDraggedCandidate(null);
   };
 
   const formatDate = (date: Date) => {
@@ -167,8 +177,9 @@ const Candidates: React.FC = () => {
                 View All Applications
               </button>
             )}
+
             <div className="text-sm text-gray-600">
-              Total: {applications.length} applications
+              Total: {candidates.length} candidates
             </div>
           </div>
         </div>
@@ -177,7 +188,7 @@ const Candidates: React.FC = () => {
       {/* Kanban Board */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         {stages.map((stage) => {
-          const stageApplications = getApplicationsByStage(stage.id);
+          const stageCandidates = getCandidatesByStage(stage.id);
 
           return (
             <div
@@ -191,63 +202,59 @@ const Candidates: React.FC = () => {
                 <span
                   className={`px-2 py-1 text-xs font-medium rounded-full ${stage.color}`}
                 >
-                  {stageApplications.length}
+                  {stageCandidates.length}
                 </span>
               </div>
 
               <div className="space-y-3">
-                {stageApplications.map((application) => (
+                {stageCandidates.map((candidate) => (
                   <div
-                    key={application.id}
+                    key={candidate.id}
                     draggable
-                    onDragStart={(e) => handleDragStart(e, application)}
+                    onDragStart={(e) => handleDragStart(e, candidate)}
                     className="bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-move"
                   >
                     <div className="mb-2">
                       <h4 className="font-medium text-gray-900 text-sm">
-                        {application.candidateName}
+                        {candidate.name}
                       </h4>
-                      <p className="text-xs text-gray-600">
-                        {application.candidateEmail}
-                      </p>
+                      <p className="text-xs text-gray-600">{candidate.email}</p>
                     </div>
 
                     <div className="mb-2">
                       <p className="text-xs text-gray-700 font-medium">
-                        {getJobTitle(application.jobId)}
+                        {getJobTitle(candidate.jobId)}
                       </p>
                       <p className="text-xs text-gray-500">
-                        Applied: {formatDate(application.appliedAt)}
+                        Applied: {formatDate(candidate.appliedAt)}
                       </p>
                     </div>
 
-                    {application.skills && application.skills.length > 0 && (
+                    {candidate.skills && candidate.skills.length > 0 && (
                       <div className="mb-2">
                         <div className="flex flex-wrap gap-1">
-                          {application.skills
-                            .slice(0, 3)
-                            .map((skill, index) => (
-                              <span
-                                key={index}
-                                className="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          {application.skills.length > 3 && (
+                          {candidate.skills.slice(0, 3).map((skill, index) => (
+                            <span
+                              key={index}
+                              className="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                          {candidate.skills.length > 3 && (
                             <span className="text-xs text-gray-500">
-                              +{application.skills.length - 3} more
+                              +{candidate.skills.length - 3} more
                             </span>
                           )}
                         </div>
                       </div>
                     )}
 
-                    {application.experience && (
+                    {candidate.experience && (
                       <div className="mb-2">
                         <p className="text-xs text-gray-600 line-clamp-2">
-                          {application.experience.substring(0, 100)}
-                          {application.experience.length > 100 && "..."}
+                          {candidate.experience.substring(0, 100)}
+                          {candidate.experience.length > 100 && "..."}
                         </p>
                       </div>
                     )}
@@ -255,8 +262,8 @@ const Candidates: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <button
                         onClick={() => {
-                          // TODO: Open application details modal
-                          console.log("View application:", application.id);
+                          // TODO: Open candidate details modal
+                          console.log("View candidate:", candidate.id);
                         }}
                         className="text-xs text-emerald-600 hover:text-emerald-700 font-medium"
                       >
@@ -265,7 +272,7 @@ const Candidates: React.FC = () => {
                       <button
                         onClick={() => {
                           // TODO: Add notes functionality
-                          console.log("Add notes:", application.id);
+                          console.log("Add notes:", candidate.id);
                         }}
                         className="text-xs text-gray-600 hover:text-gray-700"
                       >
@@ -287,9 +294,9 @@ const Candidates: React.FC = () => {
                   </div>
                 ))}
 
-                {stageApplications.length === 0 && (
+                {stageCandidates.length === 0 && (
                   <div className="text-center py-8 text-gray-500 text-sm">
-                    No applications in this stage
+                    No candidates in this stage
                   </div>
                 )}
               </div>
