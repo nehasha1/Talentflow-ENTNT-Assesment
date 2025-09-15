@@ -198,10 +198,10 @@ const Candidates: React.FC = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl text-emerald-600 font-bold mb-2">
               Candidates
             </h1>
-            <p className="text-gray-600">
+            <p className="text-emerald-600/90">
               {jobFilter
                 ? `Applications for ${getJobTitle(jobFilter)}`
                 : "Manage candidate applications"}
@@ -217,7 +217,7 @@ const Candidates: React.FC = () => {
               </button>
             )}
 
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-emerald-600 font-bold">
               Total: {candidates.length} candidates
             </div>
           </div>
@@ -226,7 +226,7 @@ const Candidates: React.FC = () => {
 
       {/* Search and Filter Controls */}
       <div className="mb-6">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="bg-white rounded-lg shadow-sm border border-emerald-400 p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -280,7 +280,7 @@ const Candidates: React.FC = () => {
           return (
             <div
               key={stage.id}
-              className="bg-gray-50 rounded-lg p-3 min-h-[600px] flex flex-col"
+              className="bg-gray-50 border border-emerald-400 rounded-lg p-3 min-h-[600px] flex flex-col"
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, stage.id)}
             >
@@ -301,7 +301,7 @@ const Candidates: React.FC = () => {
                     key={candidate.id}
                     draggable
                     onDragStart={(e) => handleDragStart(e, candidate)}
-                    className="bg-white rounded-lg p-3 shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-move mb-3"
+                    className="flex flex-col justify-between gap-1 bg-white rounded-lg p-3 shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-move mb-3"
                   >
                     {/* Name and Email */}
                     <div className="mb-2">
@@ -370,17 +370,17 @@ const Candidates: React.FC = () => {
                         onClick={() => {
                           navigate(`/candidates/${candidate.id}`);
                         }}
-                        className="text-xs text-emerald-600 hover:text-emerald-700 font-medium px-2 py-1 rounded hover:bg-emerald-50"
+                        className="cursor-pointer border border-emerald-500 text-xs text-emerald-600 hover:text-emerald-700 font-medium px-2 py-1 rounded hover:bg-emerald-50"
                       >
                         View
                       </button>
                       <button
                         onClick={() => handleAddNote(candidate)}
-                        className="text-xs text-gray-600 hover:text-gray-700 p-1 rounded hover:bg-gray-100"
+                        className="cursor-pointer text-xs text-emerald-600 hover:text-emerald-700 p-1 rounded hover:bg-gray-100"
                         title="Add Notes"
                       >
                         <svg
-                          className="w-3 h-3"
+                          className="w-5 h-5"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"

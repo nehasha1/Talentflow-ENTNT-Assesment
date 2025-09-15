@@ -273,7 +273,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
           </h1>
           <button
             onClick={() => navigate("/dashboard/assessments")}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
+            className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
           >
             Back to Assessments
           </button>
@@ -297,13 +297,13 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
           <div className="flex space-x-3">
             <button
               onClick={() => navigate("/dashboard/assessments")}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="px-4 py-2 cursor-pointer text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
             >
               Cancel
             </button>
             <button
               onClick={saveAssessment}
-              className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+              className="px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
             >
               Save Assessment
             </button>
@@ -348,7 +348,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                 <h2 className="text-lg font-medium text-gray-900">Sections</h2>
                 <button
                   onClick={addSection}
-                  className="bg-emerald-600 text-white px-3 py-1 rounded text-sm hover:bg-emerald-700"
+                  className="bg-emerald-600 cursor-pointer text-white px-3 py-1 rounded text-sm hover:bg-emerald-700"
                 >
                   Add Section
                 </button>
@@ -385,7 +385,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                           e.stopPropagation();
                           deleteSection(section.id);
                         }}
-                        className="text-red-600 hover:text-red-700 ml-2"
+                        className="text-red-600 cursor-pointer hover:text-red-700 ml-2"
                       >
                         <svg
                           className="w-4 h-4"
@@ -964,7 +964,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                                         const newValues = e.target.checked
                                           ? [...currentValues, option]
                                           : currentValues.filter(
-                                              (v) => v !== option
+                                              (v: any) => v !== option
                                             );
                                         handleResponseChange(
                                           question.id,

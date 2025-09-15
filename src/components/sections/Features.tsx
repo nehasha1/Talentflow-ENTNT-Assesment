@@ -59,12 +59,19 @@ const Features: React.FC = () => {
   };
 
   return (
-    <section id="features" className="py-16 lg:py-24 bg-gray-50">
+    <section
+      id="features"
+      className="flex flex-col gap-10 items-center py-16 lg:py-24 bg-gray-50"
+    >
+      <div className="flex items-center gap-5">
+        <span className="w-40 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
+        <p className="border px-8 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
+          Features
+        </p>
+        <span className="w-40 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-4 block">
-            // Our Features //
-          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Streamline Your Hiring Workflow From Start To Finish
           </h2>

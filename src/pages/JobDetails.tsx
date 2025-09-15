@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
-import Button from "../components/ui/Button";
+import { Button } from "../components/ui/Button";
 import ApplicationModal from "../components/Jobs/ApplicationModal";
 
 const JobDetails: React.FC = () => {
@@ -71,7 +71,11 @@ const JobDetails: React.FC = () => {
             <p className="text-gray-600 mb-8">
               The job you're looking for doesn't exist or has been removed.
             </p>
-            <Button variant="primary" onClick={() => navigate("/jobs")}>
+            <Button
+              variant="default"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              onClick={() => navigate("/jobs")}
+            >
               Browse All Jobs
             </Button>
           </div>
@@ -191,7 +195,7 @@ const JobDetails: React.FC = () => {
               </div>
               <div className="lg:w-48">
                 <Button
-                  variant="primary"
+                  variant="default"
                   size="lg"
                   onClick={handleApply}
                   className="w-full"
@@ -229,7 +233,7 @@ const JobDetails: React.FC = () => {
                   Click the "Apply Now" button above to submit your application
                   for this position.
                 </p>
-                <Button variant="primary" onClick={handleApply}>
+                <Button variant="default" onClick={handleApply}>
                   Submit Application
                 </Button>
               </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../ui/Logo";
-import Button from "../ui/Button";
+import { Button } from "../ui/Button";
 import { NAV_LINKS } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200"
+                className="text-gray-700 hover:underline hover:underline-offset-6 hover:text-emerald-600 font-medium transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -35,11 +35,12 @@ const Header: React.FC = () => {
           {/* HR Login Button */}
           <div className="hidden md:block">
             <Button
-              variant="primary"
-              size="md"
+              variant="default"
+              size="lg"
+              className="text-white bg-emerald-600 hover:bg-emerald-700"
               onClick={() => navigate("/hr-login")}
             >
-              HR Login
+              Login
             </Button>
           </div>
 
@@ -89,8 +90,8 @@ const Header: React.FC = () => {
               ))}
               <div className="px-2 pt-2">
                 <Button
-                  variant="primary"
-                  size="md"
+                  variant="default"
+                  size="sm"
                   className="w-full"
                   onClick={() => {
                     navigate("/hr-login");

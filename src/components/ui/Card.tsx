@@ -6,7 +6,8 @@ const Card: React.FC<CardProps> = ({
   className = "",
   padding = "md",
 }) => {
-  const baseStyles = "bg-white rounded-lg shadow-md border border-gray-200";
+  const baseStyles =
+    "h-full bg-white rounded-lg shadow-md border border-gray-200";
 
   const paddingStyles = {
     sm: "p-4",

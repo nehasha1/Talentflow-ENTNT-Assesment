@@ -172,13 +172,15 @@ const Jobs: React.FC = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Jobs</h1>
-            <p className="text-gray-600">Create and manage your job postings</p>
+            <h1 className="text-3xl font-bold text-emerald-600 mb-2">Jobs</h1>
+            <p className="text-emerald-600/90">
+              Create and manage your job postings
+            </p>
           </div>
           <div className="flex items-center space-x-3">
             <button
               onClick={() => navigate("/dashboard/candidates")}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2"
+              className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2"
             >
               <svg
                 className="w-5 h-5"
@@ -356,25 +358,25 @@ const Jobs: React.FC = () => {
                         onClick={() =>
                           navigate(`/dashboard/candidates?job=${job.id}`)
                         }
-                        className="text-emerald-600 hover:text-emerald-700 text-sm font-medium"
+                        className="text-emerald-600 cursor-pointer hover:text-emerald-700 text-sm font-medium"
                       >
                         View Applications
                       </button>
                       <button
                         onClick={() => setEditingJob(job)}
-                        className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                        className="text-blue-600 cursor-pointer hover:text-blue-700 text-sm font-medium"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleArchive(job)}
-                        className="text-orange-600 hover:text-orange-700 text-sm font-medium"
+                        className="text-orange-600 cursor-pointer hover:text-orange-700 text-sm font-medium"
                       >
                         {job.status === "active" ? "Archive" : "Unarchive"}
                       </button>
                       <button
                         onClick={() => handleDelete(job.id)}
-                        className="text-red-600 hover:text-red-700 text-sm font-medium"
+                        className="text-red-600 cursor-pointer hover:text-red-700 text-sm font-medium"
                       >
                         Delete
                       </button>

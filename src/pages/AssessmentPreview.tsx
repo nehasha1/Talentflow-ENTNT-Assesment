@@ -193,7 +193,7 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
           </h1>
           <button
             onClick={() => navigate("/jobs")}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
+            className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
           >
             Back to Jobs
           </button>
@@ -230,7 +230,7 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
           </p>
           <button
             onClick={() => navigate("/jobs")}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
+            className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
           >
             Back to Jobs
           </button>
@@ -251,22 +251,10 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
               {job.title} • {job.jobType} • {job.location}
             </p>
             {assessment.description && (
-              <p className="text-gray-500 mt-2">{assessment.description}</p>
+              <p className="text-black mt-2">
+                Description: {assessment.description}
+              </p>
             )}
-          </div>
-          <div className="flex space-x-3">
-            <button
-              onClick={saveDraft}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
-            >
-              Save Draft
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
-            >
-              Submit Assessment
-            </button>
           </div>
         </div>
       </div>
@@ -334,7 +322,9 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
                                     responses[question.id] || [];
                                   const newValues = e.target.checked
                                     ? [...currentValues, option]
-                                    : currentValues.filter((v) => v !== option);
+                                    : currentValues.filter(
+                                        (v: any) => v !== option
+                                      );
                                   handleResponseChange(question.id, newValues);
                                 }}
                                 className="mr-3"
@@ -446,13 +436,13 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
                       {question.validation && (
                         <div className="text-xs text-gray-500">
                           {question.validation.minLength &&
-                            `Min length: ${question.validation.minLength}`}
+                            `Min Length: ${question.validation.minLength} `}
                           {question.validation.maxLength &&
-                            `Max length: ${question.validation.maxLength}`}
+                            `Max Length: ${question.validation.maxLength} `}
                           {question.validation.min &&
-                            `Min value: ${question.validation.min}`}
+                            `Min Value: ${question.validation.min} `}
                           {question.validation.max &&
-                            `Max value: ${question.validation.max}`}
+                            `Max Value: ${question.validation.max}`}
                         </div>
                       )}
 
@@ -474,16 +464,16 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
           <div className="text-sm text-gray-500">
             All required questions must be answered before submission
           </div>
-          <div className="flex space-x-3">
+          <div className="flex space-x-3 text-nowrap">
             <button
               onClick={saveDraft}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="px-4 py-2 cursor-pointer text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
             >
               Save Draft
             </button>
             <button
               onClick={handleSubmit}
-              className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+              className="px-4 py-2 w-full cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
             >
               Submit Assessment
             </button>

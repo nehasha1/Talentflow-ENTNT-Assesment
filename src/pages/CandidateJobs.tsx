@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import JobCard from "../components/common/JobCard";
-import Button from "../components/ui/Button";
+import { Button } from "../components/ui/Button";
 import SimpleJobSkeleton from "../components/common/JobSkeleton";
 
 interface JobsResponse {
@@ -142,7 +142,7 @@ const CandidateJobs: React.FC = () => {
               <select
                 value={selectedType}
                 onChange={(e) => handleTypeFilter(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="cursor-pointer w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               >
                 {jobTypes.map((type) => (
                   <option key={type} value={type}>
@@ -194,14 +194,17 @@ const CandidateJobs: React.FC = () => {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {filteredJobs.map((job) => (
-                <div key={job.id} className="relative">
+                <div
+                  key={job.id}
+                  className="relative flex flex-col justify-between"
+                >
                   <JobCard job={job} />
                   <div className="mt-4 flex justify-center">
                     <Button
-                      variant="primary"
+                      variant="default"
                       size="sm"
                       onClick={() => handleApplyToJob(job.id)}
-                      className="w-full"
+                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
                     >
                       Apply to Job
                     </Button>
@@ -225,7 +228,7 @@ const CandidateJobs: React.FC = () => {
                         setCurrentPage(Math.max(1, currentPage - 1))
                       }
                       disabled={currentPage === 1}
-                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-3 py-1 cursor-pointer text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Previous
                     </button>
@@ -233,7 +236,7 @@ const CandidateJobs: React.FC = () => {
                       <button
                         key={i + 1}
                         onClick={() => setCurrentPage(i + 1)}
-                        className={`px-3 py-1 text-sm border rounded-md ${
+                        className={`px-3 py-1 cursor-pointer text-sm border rounded-md ${
                           currentPage === i + 1
                             ? "bg-emerald-600 text-white border-emerald-600"
                             : "border-gray-300 hover:bg-gray-50"
@@ -247,7 +250,7 @@ const CandidateJobs: React.FC = () => {
                         setCurrentPage(Math.min(totalPages, currentPage + 1))
                       }
                       disabled={currentPage === totalPages}
-                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="cursor-pointer px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Next
                     </button>

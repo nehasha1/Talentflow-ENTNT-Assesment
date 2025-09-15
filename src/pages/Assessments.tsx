@@ -66,16 +66,16 @@ const Assessments: React.FC = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-emerald-600 mb-2">
               Assessments
             </h1>
-            <p className="text-gray-600">
+            <p className="text-emerald-600/90">
               Create and manage candidate assessments
             </p>
           </div>
           <button
             onClick={() => setShowBuilder(true)}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
+            className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
           >
             <svg
               className="w-5 h-5"
@@ -125,13 +125,13 @@ const Assessments: React.FC = () => {
                   setShowBuilder(false);
                   setSelectedJob("");
                 }}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                className="px-4 py-2 cursor-pointer text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={() => navigate(`/assessments/builder/${selectedJob}`)}
-                className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors duration-200"
+                className="px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors duration-200"
               >
                 Create Assessment
               </button>
@@ -199,7 +199,7 @@ const Assessments: React.FC = () => {
                         onClick={() =>
                           navigate(`/assessments/builder/${assessment.jobId}`)
                         }
-                        className="text-emerald-600 hover:text-emerald-700 text-sm font-medium"
+                        className="text-red-600 cursor-pointer hover:text-emerald-700 text-sm font-medium"
                       >
                         Edit
                       </button>
@@ -207,7 +207,7 @@ const Assessments: React.FC = () => {
                         onClick={() =>
                           navigate(`/assessments/preview/${assessment.jobId}`)
                         }
-                        className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                        className="text-blue-600 cursor-pointer hover:text-blue-700 text-sm font-medium"
                       >
                         Preview
                       </button>
@@ -215,7 +215,7 @@ const Assessments: React.FC = () => {
                         onClick={() =>
                           navigate(`/assessments/results/${assessment.jobId}`)
                         }
-                        className="text-green-600 hover:text-green-700 text-sm font-medium"
+                        className="text-green-600 cursor-pointer hover:text-green-700 text-sm font-medium"
                       >
                         View Results
                       </button>

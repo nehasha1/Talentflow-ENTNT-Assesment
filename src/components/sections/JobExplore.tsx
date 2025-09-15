@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import JobCard from "../common/JobCard";
-import Button from "../ui/Button";
+import { Button } from "../ui/Button";
 import axios from "axios";
 import { type Job } from "../../services/seed/jobsSeed";
 import SimpleJobSkeleton from "../common/JobSkeleton";
@@ -64,13 +64,20 @@ const JobExplore: React.FC = () => {
   }
 
   return (
-    <section id="jobs" className="py-16 lg:py-24 bg-white">
+    <section
+      id="jobs"
+      className="flex flex-col items-center gap-10 py-16 lg:py-24 bg-white"
+    >
+      <div className="flex items-center gap-5">
+        <span className="w-40 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
+        <p className="border px-8 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
+          Job Opportunities
+        </p>
+        <span className="w-40 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="text-emerald-600 font-semibold text-sm uppercase tracking-wide mb-4 block">
-            // Job Opportunities //
-          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Explore Available Positions
           </h2>
@@ -158,7 +165,12 @@ const JobExplore: React.FC = () => {
             match through our platform.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg" onClick={handleBrowseAllJobs}>
+            <Button
+              variant="default"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              size="lg"
+              onClick={handleBrowseAllJobs}
+            >
               Browse All Jobs
             </Button>
             <Button variant="outline" size="lg">

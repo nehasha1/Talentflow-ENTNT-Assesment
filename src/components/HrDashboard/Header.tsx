@@ -49,8 +49,8 @@ const Header: React.FC = () => {
 
           <div className="flex items-center space-x-6">
             {/* Notification */}
-            <div className="flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200">
+            <div className=" flex items-center space-x-4">
+              <button className="cursor-pointer text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -67,8 +67,8 @@ const Header: React.FC = () => {
               </button>
             </div>
             {/* Chat */}
-            <div className="flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200">
+            <div className=" flex items-center space-x-4">
+              <button className="cursor-pointer text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
             <div className="relative" ref={profileRef}>
               <button
                 onClick={toggleProfile}
-                className="flex items-center space-x-3 text-gray-700 hover:text-emerald-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50"
+                className="cursor-pointer flex items-center space-x-3 text-gray-700 hover:text-emerald-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50"
               >
                 <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
                   <svg
@@ -129,7 +129,7 @@ const Header: React.FC = () => {
 
               {/* Profile Dropdown */}
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                <div className="cursor-pointer absolute -right-1/3 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                   {/* User Info Section */}
                   <div className="px-4 py-3 border-b border-gray-100">
                     <div className="flex items-center space-x-3">
@@ -162,7 +162,7 @@ const Header: React.FC = () => {
 
                   {/* Menu Items */}
                   <div className="py-1">
-                    <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3">
+                    <button className="cursor-pointer w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3">
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -185,7 +185,7 @@ const Header: React.FC = () => {
                       <span>Preferences</span>
                     </button>
 
-                    <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3">
+                    <button className="cursor-pointer w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-3">
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -207,7 +207,7 @@ const Header: React.FC = () => {
                   <div className="border-t border-gray-100 pt-1">
                     <button
                       onClick={handleLogout}
-                      className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors duration-200 flex items-center space-x-3"
+                      className="cursor-pointer w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors duration-200 flex items-center space-x-3"
                     >
                       <svg
                         className="w-4 h-4"
