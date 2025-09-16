@@ -26,8 +26,20 @@ export const getAssessmentByJobId = async (jobId: string) => {
   return assessmentsDb.assessments.where('jobId').equals(jobId).first();
 };
 
+export const getAllAssessments = async () => {
+  const assessments = await assessmentsDb.assessments.toArray();
+  // console.log("getAllAssessments - Retrieved from database:", assessments);
+  return assessments;
+};
+
 export const saveAssessment = async (assessment: Assessment) => {
+  console.log("Saving assessment to database:", assessment);
   await assessmentsDb.assessments.put(assessment);
+  
+  // Verify it was saved
+  const saved = await assessmentsDb.assessments.get(assessment.id);
+  console.log("Verification - Assessment saved:", saved);
+  
   return assessment;
 };
 

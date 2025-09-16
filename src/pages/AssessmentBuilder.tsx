@@ -428,8 +428,9 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                       className="px-3 py-1 border border-gray-300 rounded text-sm"
                       defaultValue=""
                     >
+                      {/* Fixed: Removed span from option to prevent hydration error */}
                       <option value="" disabled>
-                        <span className="md:text-sm text-xs">Add Question</span>
+                        Add Question
                       </option>
                       <option value="single-choice">Single Choice</option>
                       <option value="multi-choice">Multi Choice</option>

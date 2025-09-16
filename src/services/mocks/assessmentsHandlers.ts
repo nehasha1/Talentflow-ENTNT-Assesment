@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { getAssessmentByJobId, saveAssessment, submitAssessmentResponse } from '../db/assessmentsDb';
+import { getAssessmentByJobId, saveAssessment, submitAssessmentResponse, getAllAssessments } from '../db/assessmentsDb';
 import { delay, maybeFail } from '../../utils/latency';
 import { assessmentsDb } from '../db/assessmentsDb';
 
@@ -8,12 +8,26 @@ export const assessmentsHandlers = [
     await delay();
     
     // Get all assessments from the database
-    const assessments = await assessmentsDb.assessments.toArray();
+    const assessments = await getAllAssessments();
+    // console.log("GET /assessments - Found assessments:", assessments);
     
     return HttpResponse.json({
       data: assessments,
       total: assessments.length
     });
+  }),
+
+  http.post('/assessments', async ({ request }) => {
+    await delay();
+    maybeFail();
+    
+    const assessmentData = await request.json() as any;
+    // console.log("assessmentData", assessmentData);
+    
+    const savedAssessment = await saveAssessment(assessmentData);
+    // console.log("savedAssessment", savedAssessment);
+    
+    return HttpResponse.json(savedAssessment);
   }),
 
   http.get('/assessments/:jobId', async ({ params }) => {

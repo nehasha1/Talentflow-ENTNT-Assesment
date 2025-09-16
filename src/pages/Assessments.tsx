@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import type { Assessment } from "../services/seed/assessmentsSeed";
@@ -11,6 +11,7 @@ interface AssessmentsResponse {
 
 const Assessments: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,11 @@ const Assessments: React.FC = () => {
       ]);
 
       setAssessments(assessmentsResponse.data.data);
+      // console.log(assessmentsResponse.data);
+
+      // console.log(assessmentsResponse.data.data);
+      // console.log(assessments);
+
       setJobs(jobsResponse.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -36,6 +42,23 @@ const Assessments: React.FC = () => {
 
   useEffect(() => {
     fetchData();
+  }, []);
+
+  // Refresh data when navigating back to this page
+  useEffect(() => {
+    if (location.pathname === "/dashboard/assessments") {
+      fetchData();
+    }
+  }, [location.pathname]);
+
+  // Refresh data when component becomes visible (e.g., when navigating back)
+  useEffect(() => {
+    const handleFocus = () => {
+      fetchData();
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
   }, []);
 
   // const handleCreateAssessment = (jobId: string) => {
@@ -62,7 +85,7 @@ const Assessments: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
         <div className="flex gap-2 justify-between items-center">
           <div>
@@ -75,7 +98,13 @@ const Assessments: React.FC = () => {
           </div>
           <div className="flex space-x-3">
             <button
-              onClick={() => setShowBuilder(true)}
+              onClick={() => {
+                if (showBuilder) {
+                  return navigate(`/assessments/builder/${selectedJob}`);
+                } else {
+                  setShowBuilder(true);
+                }
+              }}
               className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
             >
               <svg
