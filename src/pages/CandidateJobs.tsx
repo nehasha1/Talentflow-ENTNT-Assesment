@@ -121,7 +121,7 @@ const CandidateJobs: React.FC = () => {
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              <span>Back to Home</span>
+              <span>Back</span>
             </Button>
           </div>
         </div>

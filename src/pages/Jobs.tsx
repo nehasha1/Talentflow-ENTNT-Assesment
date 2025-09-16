@@ -170,7 +170,7 @@ const Jobs: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <div className="flex justify-between items-center">
+        <div className="flex sm:flex-row flex-col sm:gap-0 gap-2 justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-emerald-600 mb-2">Jobs</h1>
             <p className="text-emerald-600/90">
@@ -195,7 +195,7 @@ const Jobs: React.FC = () => {
                   d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
                 />
               </svg>
-              <span>View All Candidates</span>
+              <span className="md:text-sm text-xs">View Candidates</span>
             </button>
             <button
               onClick={() => setShowCreateModal(true)}
@@ -214,7 +214,7 @@ const Jobs: React.FC = () => {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <span>Create Job</span>
+              <span className="md:text-sm text-xs">Create</span>
             </button>
           </div>
         </div>
@@ -312,10 +312,10 @@ const Jobs: React.FC = () => {
                             {job.status}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">
+                        <p className="sm:text-sm text-xs font-semibold text-gray-600 mb-2">
                           {job.location}
                         </p>
-                        <p className="text-sm text-gray-500 mb-3">
+                        <p className="sm:text-sm text-xs text-gray-500 mb-3">
                           {job.description.substring(0, 150)}...
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -353,14 +353,14 @@ const Jobs: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 ml-4">
+                    <div className="flex sm:flex-row flex-col items-center space-x-2 sm:space-y-0 space-y-2 ml-4">
                       <button
                         onClick={() =>
                           navigate(`/dashboard/candidates?job=${job.id}`)
                         }
                         className="text-emerald-600 cursor-pointer hover:text-emerald-700 text-sm font-medium"
                       >
-                        View Applications
+                        View
                       </button>
                       <button
                         onClick={() => setEditingJob(job)}
@@ -389,8 +389,8 @@ const Jobs: React.FC = () => {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="px-6 py-4 border-t border-gray-200">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-gray-700">
+                <div className="flex sm:flex-row sm:gap-0 gap-5 flex-col items-center justify-between">
+                  <div className="md:text-sm text-xs text-gray-700">
                     Showing {(currentPage - 1) * pageSize + 1} to{" "}
                     {Math.min(currentPage * pageSize, totalJobs)} of {totalJobs}{" "}
                     jobs

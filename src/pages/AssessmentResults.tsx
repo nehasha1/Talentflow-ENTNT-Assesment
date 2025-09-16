@@ -89,7 +89,7 @@ const AssessmentResults: React.FC<AssessmentResultsProps> = () => {
             onClick={() => navigate("/dashboard/assessments")}
             className="px-4 py-2 text-gray-900 border cursor-pointer  border-gray-300 rounded-lg hover:bg-gray-50 hover:text-emerald-500 "
           >
-            Back to Assessments
+            Back
           </button>
         </div>
 

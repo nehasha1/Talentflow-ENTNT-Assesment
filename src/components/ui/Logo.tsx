@@ -5,13 +5,7 @@ interface LogoProps {
   size?: "sm" | "md" | "lg";
 }
 
-const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
-  const sizeStyles = {
-    sm: "text-xl",
-    md: "text-2xl",
-    lg: "text-3xl",
-  };
-
+const Logo: React.FC<LogoProps> = ({ className = "" }) => {
   return (
     <div className={`flex items-center ${className}`}>
       <div className="relative">
@@ -25,7 +19,7 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
           </svg>
         </div>
       </div>
-      <span className={`font-bold text-gray-900 ${sizeStyles[size]}`}>
+      <span className="font-bold text-gray-900 text-base sm:text-lg md:text-xl">
         TalentFlow
       </span>
     </div>

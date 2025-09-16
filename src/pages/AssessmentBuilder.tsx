@@ -276,7 +276,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
             onClick={() => navigate("/dashboard/assessments")}
             className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
           >
-            Back to Assessments
+            Back
           </button>
         </div>
       </div>
@@ -286,12 +286,12 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <div className="flex justify-between items-center">
+        <div className="flex sm:flex-row flex-col gap-2 justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="md:text-3xl sm:text-2xl text-xl font-bold text-gray-900 mb-2">
               Assessment Builder
             </h1>
-            <p className="text-gray-600">
+            <p className="sm:text-sm text-xs text-gray-600">
               {job.title} • {job.jobType} • {job.location}
             </p>
           </div>
@@ -300,13 +300,13 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
               onClick={() => navigate("/dashboard/assessments")}
               className="px-4 py-2 cursor-pointer text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
             >
-              Cancel
+              <span className="md:text-sm text-xs">Cancel</span>
             </button>
             <button
               onClick={saveAssessment}
               className="px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
             >
-              Save Assessment
+              <span className="md:text-sm text-xs">Save</span>
             </button>
           </div>
         </div>
@@ -324,7 +324,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
               }`}
             >
-              Builder
+              <span className="md:text-sm text-xs">Builder</span>
             </button>
             <button
               onClick={() => setActiveTab("preview")}
@@ -334,7 +334,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
               }`}
             >
-              Live Preview
+              <span className="md:text-sm text-xs">Live Preview</span>
             </button>
           </nav>
         </div>
@@ -346,12 +346,14 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-medium text-gray-900">Sections</h2>
+                <h2 className="sm:text-lg text-base font-medium text-gray-900">
+                  Sections
+                </h2>
                 <button
                   onClick={addSection}
                   className="bg-emerald-600 cursor-pointer text-white px-3 py-1 rounded text-sm hover:bg-emerald-700"
                 >
-                  Add Section
+                  <span className="md:text-sm text-xs">Add Section</span>
                 </button>
               </div>
 
@@ -377,7 +379,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                           className="w-full font-medium text-gray-900 bg-transparent border-none outline-none"
                           onClick={(e) => e.stopPropagation()}
                         />
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="sm:text-sm text-xs text-gray-500 mt-1">
                           {section.questions.length} questions
                         </p>
                       </div>
@@ -386,7 +388,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                           e.stopPropagation();
                           deleteSection(section.id);
                         }}
-                        className="text-red-600 cursor-pointer hover:text-red-700 ml-2"
+                        className="text-red-600 cursor-pointer hover:text-red-700 ml-2 md:text-sm text-xs"
                       >
                         <svg
                           className="w-4 h-4"
@@ -412,7 +414,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
             {selectedSection && (
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-medium text-gray-900">
+                  <h3 className="sm:text-lg text-base font-medium text-gray-900">
                     Questions
                   </h3>
                   <div className="flex space-x-2">
@@ -427,7 +429,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                       defaultValue=""
                     >
                       <option value="" disabled>
-                        Add Question
+                        <span className="md:text-sm text-xs">Add Question</span>
                       </option>
                       <option value="single-choice">Single Choice</option>
                       <option value="multi-choice">Multi Choice</option>
@@ -1088,7 +1090,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                   }}
                   className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
                 >
-                  Save Responses
+                  Save
                 </button>
               </div>
             </div>

@@ -61,20 +61,25 @@ const HrDashboard = () => {
     bgColor: string;
     trend?: string;
   }) => (
-    <div className="bg-white border border-emerald-300 rounded-lg shadow-sm p-6">
+    <div className="bg-white border border-emerald-300 rounded-lg shadow-sm p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className={`p-3 ${bgColor} rounded-lg`}>
-            <div className={`w-6 h-6 ${iconColor}`}>{icon}</div>
+            <div className={`md:w-6 md:h-6 w-4 h-4 ${iconColor}`}>{icon}</div>
           </div>
           <div className="ml-4">
-            <h3 className="text-lg font-medium text-gray-900">{title}</h3>
-            <p className="text-sm text-gray-500">{subtitle}</p>
+            <h3 className="text-nowrap font-medium text-gray-900">{title}</h3>
+            <p className="text-xs font-semibold text-emerald-600/70">
+              {" "}
+              {subtitle}
+            </p>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-2xl font-bold text-gray-900">{value}</div>
-          {trend && <div className="text-sm text-emerald-600">{trend}</div>}
+          <div className="md:text-lg lg:text-xl font-bold text-gray-900">
+            {value}
+          </div>
+          {/* {trend && <div className="text-sm text-emerald-600">{trend}</div>} */}
         </div>
       </div>
     </div>
@@ -127,7 +132,7 @@ const HrDashboard = () => {
       {/* Statistics Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
-          title="Total Jobs"
+          title="Jobs"
           value={statistics.totalJobs}
           subtitle={`${statistics.activeJobs} active`}
           icon={
@@ -146,7 +151,7 @@ const HrDashboard = () => {
         />
 
         <StatCard
-          title="Total candidates"
+          title="Candidates"
           value={statistics.totalCandidates}
           subtitle={`${statistics.hiredCandidates} hired`}
           icon={
@@ -233,10 +238,10 @@ const HrDashboard = () => {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="md:text-lg text-base font-medium text-gray-900">
                   Candidates
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="md:text-sm text-xs text-gray-500">
                   Manage your candidate pipeline
                 </p>
               </div>
@@ -264,8 +269,10 @@ const HrDashboard = () => {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="text-lg font-medium text-gray-900">Jobs</h3>
-                <p className="text-sm text-gray-500">
+                <h3 className="md:text-lg text-base font-medium text-gray-900">
+                  Jobs
+                </h3>
+                <p className="md:text-sm text-xs text-gray-500">
                   Create and manage job postings
                 </p>
               </div>
@@ -293,10 +300,10 @@ const HrDashboard = () => {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="md:text-lg text-base font-medium text-gray-900">
                   Assessments
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="md:text-sm text-xs text-gray-500">
                   Create candidate assessments
                 </p>
               </div>
@@ -313,28 +320,28 @@ const HrDashboard = () => {
         <div className="space-y-4">
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">
+            <span className="md:text-sm text-xs text-gray-600">
               {statistics.newCandidates} new candidates applied this week
             </span>
             <span className="text-xs text-gray-400 ml-auto">This week</span>
           </div>
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">
+            <span className="md:text-sm text-xs text-gray-600">
               {statistics.completedAssessments} assessments completed
             </span>
             <span className="text-xs text-gray-400 ml-auto">This week</span>
           </div>
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">
+            <span className="md:text-sm text-xs text-gray-600">
               {statistics.activeJobs} active job postings
             </span>
             <span className="text-xs text-gray-400 ml-auto">Current</span>
           </div>
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">
+            <span className="md:text-sm text-xs text-gray-600">
               {statistics.interviewsScheduled} interviews scheduled
             </span>
             <span className="text-xs text-gray-400 ml-auto">Upcoming</span>

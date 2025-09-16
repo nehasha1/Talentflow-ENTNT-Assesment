@@ -196,7 +196,7 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
             onClick={() => navigate("/jobs")}
             className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
           >
-            Back to Jobs
+            Back
           </button>
         </div>
       </div>
@@ -233,7 +233,7 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
             onClick={() => navigate("/jobs")}
             className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
           >
-            Back to Jobs
+            Back
           </button>
         </div>
       </div>
@@ -246,21 +246,21 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
         <div className="flex justify-between items-center">
           <div>
             <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="md:text-3xl sm:text-2xl text-xl font-bold text-gray-900 mb-2">
                 {assessment.title}
               </h1>
               <button
                 onClick={() => navigate("/dashboard/assessments")}
-                className="px-4 py-2 text-gray-900 border cursor-pointer  border-gray-300 rounded-lg hover:bg-gray-50 hover:text-emerald-500 "
+                className="px-4 sm:py-2 py-1 text-gray-900 border cursor-pointer  border-gray-300 rounded-lg hover:bg-gray-50 hover:text-emerald-500 "
               >
-                Back to Assessments
+                Back
               </button>
             </div>
-            <p className="text-gray-600">
+            <p className="sm:text-sm text-xs text-gray-600">
               {job.title} • {job.jobType} • {job.location}
             </p>
             {assessment.description && (
-              <p className="text-black mt-2">
+              <p className="text-black mt-2 sm:text-base text-sm">
                 Description: {assessment.description}
               </p>
             )}
@@ -469,7 +469,7 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
       </div>
 
       <div className="mt-8 pt-6 border-t border-gray-200">
-        <div className="flex justify-between items-center">
+        <div className="flex sm:flex-row flex-col gap-5 justify-between items-center">
           <div className="text-sm text-gray-500">
             All required questions must be answered before submission
           </div>
@@ -484,7 +484,7 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
               onClick={handleSubmit}
               className="px-4 py-2 w-full cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
             >
-              Submit Assessment
+              Submit
             </button>
           </div>
         </div>
