@@ -39,7 +39,14 @@ if (process.env.NODE_ENV === "development") {
         })
         .catch((error) => console.error("MSW failed to start:", error));
     })
-    .catch((error) => console.error("Failed to import MSW:", error));
+    .catch((error) => {
+      console.error("Failed to import MSW:", error);
+      // Fallback: start app without MSW if import fails
+      initializeJobs();
+      initializeCandidates();
+      initializeAssessments();
+      startApp();
+    });
 } else {
   // In production, initialize databases immediately and start app
   initializeJobs();
