@@ -1,7 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { getAssessmentByJobId, saveAssessment, submitAssessmentResponse, getAllAssessments } from '../db/assessmentsDb';
 import { delay, maybeFail } from '../../utils/latency';
-import { assessmentsDb } from '../db/assessmentsDb';
 
 export const assessmentsHandlers = [
   http.get('/assessments', async () => {
