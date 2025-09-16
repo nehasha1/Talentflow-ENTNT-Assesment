@@ -104,7 +104,7 @@ src/
 
    ```bash
    git clone <repository-url>
-   cd talentflowV2
+   cd talentflow
    ```
 
 2. **Install dependencies**
@@ -178,7 +178,7 @@ npm run lint     # Run ESLint
 ### Why MSW over JSON Server?
 
 - **Realistic mocking**: Intercepts actual HTTP requests
-- **Development/Production parity**: Same code works in both environments
+- **Development**: Same code works in both environments
 - **Better debugging**: Network tab shows actual requests
 - **Flexible**: Easy to add complex business logic
 
@@ -271,4 +271,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**TalentFlow v2** - Streamlining talent management for modern HR teams.
+**TalentFlow** - Streamlining talent management for modern HR teams.
