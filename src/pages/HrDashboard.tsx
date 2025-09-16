@@ -51,7 +51,6 @@ const HrDashboard = () => {
     icon,
     iconColor,
     bgColor,
-    trend,
   }: {
     title: string;
     value: string | number;
@@ -59,7 +58,6 @@ const HrDashboard = () => {
     icon: React.ReactNode;
     iconColor: string;
     bgColor: string;
-    trend?: string;
   }) => (
     <div className="bg-white border border-emerald-300 rounded-lg shadow-sm p-4">
       <div className="flex items-center justify-between">
@@ -147,7 +145,6 @@ const HrDashboard = () => {
           }
           iconColor="text-blue-600"
           bgColor="bg-blue-100"
-          trend={`${Math.floor(statistics.totalJobs * 0.125)} this week`}
         />
 
         <StatCard
@@ -166,7 +163,6 @@ const HrDashboard = () => {
           }
           iconColor="text-green-600"
           bgColor="bg-green-100"
-          trend={`${statistics.hiredCandidates} hired`}
         />
 
         <StatCard
@@ -185,10 +181,6 @@ const HrDashboard = () => {
           }
           iconColor="text-purple-600"
           bgColor="bg-purple-100"
-          trend={`${Math.round(
-            (statistics.completedAssessments / statistics.totalAssessments) *
-              100
-          )}% completion`}
         />
 
         <StatCard
@@ -207,7 +199,6 @@ const HrDashboard = () => {
           }
           iconColor="text-orange-600"
           bgColor="bg-orange-100"
-          trend={`${statistics.offersPending} pending offers`}
         />
       </div>
 
