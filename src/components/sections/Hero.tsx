@@ -11,11 +11,11 @@ const Hero: React.FC = () => {
       className="flex flex-col gap-5 items-center bg-gradient-to-br from-emerald-50 to-teal-50 py-20 lg:py-32"
     >
       <div className="flex items-center gap-5">
-        <span className="w-40 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
-        <p className="border px-8 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
+        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
+        <p className="border md:text-base sm:text-sm text-xs md:px-8 sm:px-6 px-4 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
           About Our Platform
         </p>
-        <span className="w-40 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
+        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -58,7 +58,7 @@ const Hero: React.FC = () => {
               {PLATFORM_STATS.map((stat, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center"
+                  className="bg-white rounded-2xl md:p-8 p-2 shadow-lg border border-gray-100 text-center"
                 >
                   <div className="text-3xl font-bold text-gray-900 mb-2">
                     {stat.value}

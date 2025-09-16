@@ -10,11 +10,11 @@ const About: React.FC = () => {
       className="flex flex-col gap-12 items-center py-16 lg:py-24 bg-white"
     >
       <div className="flex items-center gap-5">
-        <span className="w-40 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
-        <p className="border px-8 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
+        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
+        <p className="border md:text-base sm:text-sm text-xs md:px-8 sm:px-6 px-4 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
           Our Platform
         </p>
-        <span className="w-40 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
+        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

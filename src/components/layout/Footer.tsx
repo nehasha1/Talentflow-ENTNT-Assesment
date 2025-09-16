@@ -30,11 +30,12 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          {/* Company Info */}
-          <div className="md:col-span-2">
+        {/* Main Footer Content */}
+        <div className="flex flex-col justify-evenly sm:flex-row gap-8 lg:gap-12">
+          {/* Company Info Section */}
+          <div className="flex-1 lg:max-w-md">
             <Logo className="mb-4" />
-            <p className="text-gray-600 text-sm mb-6 max-w-md">
+            <p className="text-gray-600 text-sm mb-6 leading-relaxed">
               Transform your hiring process with smarter, faster, data-driven
               technology. From sourcing to onboarding, streamline every step.
             </p>
@@ -42,6 +43,7 @@ const Footer: React.FC = () => {
               <a
                 href="#"
                 className="text-gray-400 hover:text-emerald-600 transition-colors"
+                aria-label="Twitter"
               >
                 <svg
                   className="w-5 h-5"
@@ -54,6 +56,7 @@ const Footer: React.FC = () => {
               <a
                 href="#"
                 className="text-gray-400 hover:text-emerald-600 transition-colors"
+                aria-label="LinkedIn"
               >
                 <svg
                   className="w-5 h-5"
@@ -66,59 +69,63 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Links */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
-              Product
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.product.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-600 hover:text-emerald-600 text-sm transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links Section */}
+          <div className="flex justify-evenly lg:flex-none">
+            <div className="grid grid-cols-3 gap-8">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+                  Product
+                </h3>
+                <ul className="space-y-3">
+                  {footerLinks.product.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        className="text-gray-600 hover:text-emerald-600 sm:text-sm text-xs transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
-              Company
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-600 hover:text-emerald-600 text-sm transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+                  Company
+                </h3>
+                <ul className="space-y-3">
+                  {footerLinks.company.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        className="text-gray-600 hover:text-emerald-600 sm:text-sm text-xs transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
-              Support
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-600 hover:text-emerald-600 text-sm transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+                  Support
+                </h3>
+                <ul className="space-y-3">
+                  {footerLinks.resources.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        className="text-gray-600 hover:text-emerald-600 sm:text-sm text-xs transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -132,7 +139,7 @@ const Footer: React.FC = () => {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-emerald-600 text-sm transition-colors"
+                    className="text-gray-400 hover:text-emerald-600 sm:text-sm text-xs transition-colors"
                   >
                     {link.name}
                   </a>

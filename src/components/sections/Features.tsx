@@ -80,11 +80,11 @@ const Features: React.FC = () => {
       className="flex flex-col gap-10 items-center py-16 lg:py-24 bg-gray-50"
     >
       <div className="flex items-center gap-5">
-        <span className="w-40 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
-        <p className="border px-8 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
+        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
+        <p className="border md:text-base sm:text-sm text-xs md:px-8 sm:px-6 px-4 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
           Features
         </p>
-        <span className="w-40 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
+        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -135,7 +135,7 @@ const Features: React.FC = () => {
                       <span className="text-xs text-gray-500">
                         5+ Positions
                       </span>
-                      <span className="text-sm font-semibold text-gray-900">
+                      <span className="md:text-sm text-xs font-semibold text-gray-900">
                         $8,000/Month
                       </span>
                     </div>
@@ -151,7 +151,7 @@ const Features: React.FC = () => {
                         <span className="text-xs font-semibold">MA</span>
                       </div>
                       <div className="flex-1 text-left">
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="md:text-sm text-xs font-medium text-gray-900">
                           Maria Angelica M
                         </p>
                         <p className="text-xs text-gray-600">
@@ -174,7 +174,7 @@ const Features: React.FC = () => {
                   <div className="space-y-4">
                     <div className="bg-white rounded-lg p-4 border-l-4 border-emerald-500">
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="text-sm font-semibold text-gray-900">
+                        <h4 className="md:text-sm text-xs font-semibold text-gray-900">
                           Technical Assessment
                         </h4>
                         <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded">

@@ -54,25 +54,29 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         <div className="flex-grow min-w-0">
           <div className="flex items-start justify-between mb-2">
             <div>
-              <h3 className="font-semibold text-gray-900 text-lg group-hover:text-emerald-600 transition-colors">
+              <h3 className="font-semibold text-gray-900 md:text-lg sm:text-base text-sm group-hover:text-emerald-600 transition-colors">
                 {job.title}
               </h3>
-              <p className="text-gray-600 text-sm">{job.jobType || "Job"}</p>
+              <p className="text-gray-600 md:text-sm text-xs">
+                {job.jobType || "Job"}
+              </p>
             </div>
-            <div className="text-right">
-              <p className="font-semibold text-gray-900">{job.salary}</p>
+            <div className="md:text-right text-nowrap">
+              <p className="md:text-sm text-xs font-semibold text-gray-900">
+                {job.salary}
+              </p>
               <p className="text-gray-500 text-xs">
                 {formatDate(job.createdAt.toString())}
               </p>
             </div>
           </div>
 
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+          <p className="text-gray-600 sm:text-sm text-xs mb-3 line-clamp-2">
             {job.description}
           </p>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-sm text-gray-500">
+          <div className="flex md:flex-row flex-col gap-3 md:items-center items-start justify-between">
+            <div className="flex md:items-center items-start space-x-2 text-sm text-gray-500">
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -92,10 +96,10 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <span>{job.location}</span>
+              <span className="md:text-sm text-xs">{job.location}</span>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex md:items-center items-start space-x-2">
               {job.tags.slice(0, 2).map((tag, index) => (
                 <span
                   key={index}
