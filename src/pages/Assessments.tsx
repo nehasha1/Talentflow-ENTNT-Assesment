@@ -73,25 +73,35 @@ const Assessments: React.FC = () => {
               Create and manage candidate assessments
             </p>
           </div>
-          <button
-            onClick={() => setShowBuilder(true)}
-            className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <div className="flex space-x-3">
+            <button
+              onClick={() => setShowBuilder(true)}
+              className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            <span>Create Assessment</span>
-          </button>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <span>Create Assessment</span>
+            </button>
+            {showBuilder && (
+              <button
+                onClick={() => setShowBuilder(false)}
+                className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
+              >
+                <span>Cancel</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -120,15 +130,6 @@ const Assessments: React.FC = () => {
           </div>
           {selectedJob && (
             <div className="mt-6 flex justify-end space-x-3">
-              <button
-                onClick={() => {
-                  setShowBuilder(false);
-                  setSelectedJob("");
-                }}
-                className="px-4 py-2 cursor-pointer text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-              >
-                Cancel
-              </button>
               <button
                 onClick={() => navigate(`/assessments/builder/${selectedJob}`)}
                 className="px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors duration-200"

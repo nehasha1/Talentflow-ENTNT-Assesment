@@ -155,7 +155,7 @@ const CandidateProfile: React.FC<CandidateProfileProps> = () => {
           </h1>
           <button
             onClick={() => navigate("/dashboard/candidates")}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
+            className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
           >
             Back to Candidates
           </button>
@@ -184,7 +184,7 @@ const CandidateProfile: React.FC<CandidateProfileProps> = () => {
           </div>
           <button
             onClick={() => navigate("/dashboard/candidates")}
-            className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+            className="px-4 py-2 text-gray-700 border cursor-pointer  border-gray-300 rounded-lg hover:bg-gray-50 hover:text-emerald-500 "
           >
             Back to Candidates
           </button>

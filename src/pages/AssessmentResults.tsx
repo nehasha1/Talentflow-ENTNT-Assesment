@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import type { Assessment } from "../services/seed/assessmentsSeed";
@@ -12,7 +12,7 @@ const AssessmentResults: React.FC<AssessmentResultsProps> = () => {
   const [assessment, setAssessment] = useState<Assessment | null>(null);
   const [responses, setResponses] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchData();
     loadResponses();
@@ -81,9 +81,18 @@ const AssessmentResults: React.FC<AssessmentResultsProps> = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Assessment Results
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Assessment Results
+          </h1>
+          <button
+            onClick={() => navigate("/dashboard/assessments")}
+            className="px-4 py-2 text-gray-900 border cursor-pointer  border-gray-300 rounded-lg hover:bg-gray-50 hover:text-emerald-500 "
+          >
+            Back to Assessments
+          </button>
+        </div>
+
         <p className="text-gray-600">
           {job.title} • {job.jobType} • {job.location}
         </p>

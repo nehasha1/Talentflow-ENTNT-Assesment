@@ -1,12 +1,14 @@
 import React from "react";
 import type { Job } from "../../services/seed/jobsSeed";
 import Card from "../ui/Card";
+import { useNavigate } from "react-router-dom";
 
 interface JobCardProps {
   job: Job;
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
+  const navigate = useNavigate();
   const getTypeColor = (type: string) => {
     switch (type) {
       case "Full-time":
@@ -20,6 +22,10 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       default:
         return "bg-gray-100 text-gray-800";
     }
+  };
+
+  const handleJobCardClick = () => {
+    navigate(`/jobs/${job.id}`);
   };
 
   const formatDate = (dateString: string) => {
@@ -36,7 +42,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
 
   return (
     <Card className="hover:shadow-lg transition-all duration-300 border hover:border-emerald-200 cursor-pointer group">
-      <div className="flex items-start space-x-4">
+      <div onClick={handleJobCardClick} className="flex items-start space-x-4">
         {/* Job Type Avatar */}
         <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
           <span className="text-white font-semibold text-lg">

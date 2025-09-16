@@ -244,9 +244,17 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              {assessment.title}
-            </h1>
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {assessment.title}
+              </h1>
+              <button
+                onClick={() => navigate("/dashboard/assessments")}
+                className="px-4 py-2 text-gray-900 border cursor-pointer  border-gray-300 rounded-lg hover:bg-gray-50 hover:text-emerald-500 "
+              >
+                Back to Assessments
+              </button>
+            </div>
             <p className="text-gray-600">
               {job.title} • {job.jobType} • {job.location}
             </p>

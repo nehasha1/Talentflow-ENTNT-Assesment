@@ -93,7 +93,7 @@ const JobDetails: React.FC = () => {
             <Button
               variant="outline"
               onClick={() => navigate("/jobs")}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 hover:bg-gray-100 hover:text-emerald-600"
             >
               <svg
                 className="w-4 h-4"
@@ -198,7 +198,7 @@ const JobDetails: React.FC = () => {
                   variant="default"
                   size="lg"
                   onClick={handleApply}
-                  className="w-full"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700"
                 >
                   Apply Now
                 </Button>
@@ -233,7 +233,11 @@ const JobDetails: React.FC = () => {
                   Click the "Apply Now" button above to submit your application
                   for this position.
                 </p>
-                <Button variant="default" onClick={handleApply}>
+                <Button
+                  variant="default"
+                  onClick={handleApply}
+                  className="bg-emerald-600 hover:bg-emerald-700"
+                >
                   Submit Application
                 </Button>
               </div>

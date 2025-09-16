@@ -61,7 +61,7 @@ const HrDashboard = () => {
     bgColor: string;
     trend?: string;
   }) => (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white border border-emerald-300 rounded-lg shadow-sm p-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className={`p-3 ${bgColor} rounded-lg`}>
@@ -145,24 +145,6 @@ const HrDashboard = () => {
           trend={`${Math.floor(statistics.totalJobs * 0.125)} this week`}
         />
 
-        {/* <StatCard
-          title="Total Candidates"
-          value={statistics.totalCandidates}
-          subtitle={`${statistics.newCandidates} new this week`}
-          icon={
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-              />
-            </svg>
-          }
-          iconColor="text-emerald-600"
-          bgColor="bg-emerald-100"
-          trend={`+${statistics.newCandidates} this week`}
-        /> */}
         <StatCard
           title="Total candidates"
           value={statistics.totalCandidates}
@@ -232,7 +214,7 @@ const HrDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             onClick={() => navigate("/dashboard/candidates")}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+            className="bg-white rounded-lg shadow-sm border border-emerald-300 p-6 hover:shadow-md transition-shadow cursor-pointer"
           >
             <div className="flex items-center">
               <div className="p-2 bg-emerald-100 rounded-lg">
@@ -263,7 +245,7 @@ const HrDashboard = () => {
 
           <div
             onClick={() => navigate("/dashboard/jobs")}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+            className="bg-white rounded-lg shadow-sm border border-emerald-300 p-6 hover:shadow-md transition-shadow cursor-pointer"
           >
             <div className="flex items-center">
               <div className="p-2 bg-blue-100 rounded-lg">
@@ -292,7 +274,7 @@ const HrDashboard = () => {
 
           <div
             onClick={() => navigate("/dashboard/assessments")}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+            className="bg-white rounded-lg shadow-sm border border-emerald-300 p-6 hover:shadow-md transition-shadow cursor-pointer"
           >
             <div className="flex items-center">
               <div className="p-2 bg-purple-100 rounded-lg">
@@ -324,7 +306,7 @@ const HrDashboard = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-emerald-300 p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
           Recent Activity
         </h2>

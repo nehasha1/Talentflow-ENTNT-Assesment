@@ -50,9 +50,9 @@ export const FEATURES: FeatureItem[] = [
   },
   {
     id: '3',
-    title: 'Chat With Applicants',
-    description: 'Communicate instantly with candidates. Move talent forward all in one place.',
-    icon: 'message-circle',
+    title: 'Assessment Tools',
+    description: 'Evaluate candidates with comprehensive assessments. Make data-driven hiring decisions.',
+    icon: 'clipboard-check',
   },
 ];
 

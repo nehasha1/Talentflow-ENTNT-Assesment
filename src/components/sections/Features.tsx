@@ -53,6 +53,22 @@ const Features: React.FC = () => {
             />
           </svg>
         );
+      case "clipboard-check":
+        return (
+          <svg
+            className="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+            />
+          </svg>
+        );
       default:
         return null;
     }
@@ -87,15 +103,7 @@ const Features: React.FC = () => {
               key={feature.id}
               className="text-center hover:shadow-lg transition-shadow duration-300"
             >
-              <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 ${
-                  index === 0
-                    ? "bg-emerald-600 text-white"
-                    : index === 1
-                    ? "bg-emerald-100 text-emerald-600"
-                    : "bg-gray-100 text-gray-600"
-                }`}
-              >
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-emerald-600 text-white">
                 {getFeatureIcon(feature.icon)}
               </div>
 
@@ -163,11 +171,43 @@ const Features: React.FC = () => {
 
               {index === 2 && (
                 <div className="mt-6 bg-gray-100 rounded-xl p-6">
-                  <div className="bg-emerald-600 rounded-lg p-4 text-white text-left">
-                    <p className="text-sm mb-2">
-                      Congrats!! you have been accepted to the next stage
-                    </p>
-                    <span className="text-xs opacity-80">13:00 ✓</span>
+                  <div className="space-y-4">
+                    <div className="bg-white rounded-lg p-4 border-l-4 border-emerald-500">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-semibold text-gray-900">
+                          Technical Assessment
+                        </h4>
+                        <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded">
+                          In Progress
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-gray-600">JavaScript</span>
+                          <span className="text-emerald-600 font-medium">
+                            85%
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-1.5">
+                          <div
+                            className="bg-emerald-500 h-1.5 rounded-full"
+                            style={{ width: "85%" }}
+                          ></div>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-gray-600">React</span>
+                          <span className="text-emerald-600 font-medium">
+                            92%
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-1.5">
+                          <div
+                            className="bg-emerald-500 h-1.5 rounded-full"
+                            style={{ width: "92%" }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

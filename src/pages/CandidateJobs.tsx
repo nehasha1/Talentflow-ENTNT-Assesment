@@ -96,15 +96,17 @@ const CandidateJobs: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold mb-2 text-emerald-600">
                 Available Jobs
               </h1>
-              <p className="text-gray-600">Find your next career opportunity</p>
+              <p className="text-emerald-600/90">
+                Find your next career opportunity
+              </p>
             </div>
             <Button
               variant="outline"
               onClick={() => navigate("/")}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 hover:bg-gray-100 hover:text-emerald-600"
             >
               <svg
                 className="w-4 h-4"

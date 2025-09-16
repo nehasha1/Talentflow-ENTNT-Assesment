@@ -211,7 +211,7 @@ const Candidates: React.FC = () => {
             {jobFilter && (
               <button
                 onClick={() => navigate("/dashboard/candidates")}
-                className="text-gray-600 hover:text-gray-900 text-sm font-medium"
+                className="text-gray-600 hover:text-gray-900 text-sm font-medium cursor-pointer"
               >
                 View All Applications
               </button>
@@ -263,7 +263,7 @@ const Candidates: React.FC = () => {
                   setSearch("");
                   setStageFilter("");
                 }}
-                className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+                className="px-4 py-2 cursor-pointer text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
               >
                 Clear Filters
               </button>
@@ -410,8 +410,8 @@ const Candidates: React.FC = () => {
 
       {/* Notes Modal */}
       {showNotesModal && selectedCandidate && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <div className="fixed inset-0 bg-emerald-50 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white border border-emerald-400 rounded-lg p-6 w-full max-w-md mx-4">
             <h3 className="text-lg font-medium text-gray-900 mb-4">
               Add Note for {selectedCandidate.name}
             </h3>
@@ -428,13 +428,13 @@ const Candidates: React.FC = () => {
                   setSelectedCandidate(null);
                   setQuickNote("");
                 }}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
+                className="px-4 py-2 cursor-pointer text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveNote}
-                className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+                className="px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
               >
                 Save Note
               </button>

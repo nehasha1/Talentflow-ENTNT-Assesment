@@ -69,7 +69,7 @@ const JobModal: React.FC<JobModalProps> = ({ job, onClose, onSave }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-emerald-50 bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
@@ -78,7 +78,7 @@ const JobModal: React.FC<JobModalProps> = ({ job, onClose, onSave }) => {
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400  cursor-pointer hover:text-emerald-500"
             >
               <svg
                 className="w-6 h-6"
@@ -249,7 +249,7 @@ const JobModal: React.FC<JobModalProps> = ({ job, onClose, onSave }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                className="px-4 py-2 cursor-pointer text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
                 Cancel
               </button>
