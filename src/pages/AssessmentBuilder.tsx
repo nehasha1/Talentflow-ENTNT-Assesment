@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import type { Assessment, Question } from "../services/seed/assessmentsSeed";
+import toast from "react-hot-toast";
 
 interface AssessmentBuilderProps {}
 
@@ -1083,7 +1084,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
                       `assessment-responses-${assessment.id}`,
                       JSON.stringify(responses)
                     );
-                    alert("Responses saved locally!");
+                    toast.success("Responses saved locally!");
                   }}
                   className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
                 >

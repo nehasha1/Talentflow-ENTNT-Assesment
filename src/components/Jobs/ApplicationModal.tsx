@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { type Job } from "../../services/seed/jobsSeed";
+import { toast } from "react-hot-toast";
 
 interface ApplicationModalProps {
   job: Job;
@@ -79,7 +80,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
       onClose();
     } catch (error) {
       console.error("Error submitting application:", error);
-      alert("Failed to submit application. Please try again.");
+      toast.error("Failed to submit application. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import type { Assessment, Question } from "../services/seed/assessmentsSeed";
+import { toast } from "react-hot-toast";
 
 interface AssessmentPreviewProps {}
 
@@ -164,7 +165,7 @@ const AssessmentPreview: React.FC<AssessmentPreviewProps> = () => {
         `assessment-responses-${assessment.id}`,
         JSON.stringify(responses)
       );
-      alert("Draft saved successfully!");
+      toast.success("Draft saved successfully!");
     }
   };
 

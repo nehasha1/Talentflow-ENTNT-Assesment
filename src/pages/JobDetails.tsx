@@ -4,6 +4,7 @@ import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import { Button } from "../components/ui/Button";
 import ApplicationModal from "../components/Jobs/ApplicationModal";
+import { toast } from "react-hot-toast";
 
 const JobDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,7 +37,7 @@ const JobDetails: React.FC = () => {
   };
 
   const handleApplicationSuccess = () => {
-    alert(`Application submitted successfully for ${job?.title}!`);
+    toast.success(`Application submitted successfully for ${job?.title}!`);
     navigate("/jobs");
   };
 

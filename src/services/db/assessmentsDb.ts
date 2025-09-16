@@ -18,7 +18,7 @@ export const initializeAssessments = async () => {
   const count = await assessmentsDb.assessments.count();
   if (count === 0) {
     await assessmentsDb.assessments.bulkAdd(assessmentsSeed);
-    console.log(`Seeded ${assessmentsSeed.length} assessments`);
+    // console.log(`Seeded ${assessmentsSeed.length} assessments`);
   }
 };
 

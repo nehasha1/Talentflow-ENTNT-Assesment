@@ -17,37 +17,37 @@ export const candidatesDb = new CandidatesDB();
 // Add debugging functions to window object in development
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as any).clearCandidatesDB = async () => {
-    console.log('Clearing candidates database...');
+    // console.log('Clearing candidates database...');
     await candidatesDb.candidates.clear();
-    console.log('Database cleared');
+    // console.log('Database cleared');
   };
   
   (window as any).reinitializeCandidates = async () => {
-    console.log('Re-initializing candidates...');
+    // console.log('Re-initializing candidates...');
     await candidatesDb.candidates.clear();
     await initializeCandidates();
-    console.log('Re-initialization complete');
+    // console.log('Re-initialization complete');
   };
 }
 
 export const initializeCandidates = async () => {
   try {
-    console.log('Initializing candidates database...');
+    // console.log('Initializing candidates database...');
     
     // Clear existing database to ensure fresh start with new schema
     await candidatesDb.candidates.clear();
-    console.log('Database cleared for fresh start');
+    // console.log('Database cleared for fresh start');
     
     // Seed candidates
-    console.log('Seeding candidates...');
+    // console.log('Seeding candidates...');
     await candidatesDb.candidates.bulkAdd(candidatesSeed);
-    console.log(`Seeded ${candidatesSeed.length} candidates`);
+    // console.log(`Seeded ${candidatesSeed.length} candidates`);
     
     // Verify seeding
-    const count = await candidatesDb.candidates.count();
-    console.log('Final candidate count:', count);
+    // const count = await candidatesDb.candidates.count();
+    // console.log('Final candidate count:', count);
   } catch (error) {
-    console.error('Error initializing candidates:', error);
+    // console.error('Error initializing candidates:', error);
     throw error;
   }
 };
@@ -147,12 +147,12 @@ export const createCandidateApplication = async (applicationData: Omit<Candidate
     stage: 'applied'
   };
   
-  console.log('createCandidateApplication: Creating new candidate application:', newCandidate);
+  // console.log('createCandidateApplication: Creating new candidate application:', newCandidate);
   await candidatesDb.candidates.add(newCandidate);
   
   // Verify the candidate was added
-  const count = await candidatesDb.candidates.count();
-  console.log(`createCandidateApplication: Total candidates after creation: ${count}`);
+  // const count = await candidatesDb.candidates.count();
+  // console.log(`createCandidateApplication: Total candidates after creation: ${count}`);
   
   return newCandidate;
 };
@@ -177,7 +177,7 @@ export const deleteCandidate = async (candidateId: string) => {
 
 export const getApplicationStatistics = async () => {
   const allCandidates = await candidatesDb.candidates.toArray();
-  console.log(`getApplicationStatistics: Found ${allCandidates.length} total candidates`);
+  // console.log(`getApplicationStatistics: Found ${allCandidates.length} total candidates`);
   
   const stats = {
     totalApplications: allCandidates.length,
@@ -193,6 +193,6 @@ export const getApplicationStatistics = async () => {
     stats[candidate.stage]++;
   });
   
-  console.log('getApplicationStatistics: Stats:', stats);
+  // console.log('getApplicationStatistics: Stats:', stats);
   return stats;
 };

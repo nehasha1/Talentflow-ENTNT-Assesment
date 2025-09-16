@@ -39,7 +39,7 @@ const JobExplore: React.FC = () => {
     fetchJobs();
   }, []);
 
-  console.log(jobs);
+  // console.log(jobs);
 
   const jobTypes = ["All", "Full-time", "Remote", "Part-time", "Contract"];
 

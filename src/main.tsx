@@ -6,12 +6,14 @@ import { BrowserRouter } from "react-router-dom";
 import { initializeJobs } from "./services/db/jobsDb";
 import { initializeCandidates } from "./services/db/candidatesDb";
 import { initializeAssessments } from "./services/db/assessmentsDb";
+import { Toaster } from "react-hot-toast";
 
 const startApp = () => {
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <BrowserRouter>
         <App />
+        <Toaster />
       </BrowserRouter>
     </StrictMode>
   );

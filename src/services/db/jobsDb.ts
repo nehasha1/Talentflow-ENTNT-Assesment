@@ -16,15 +16,15 @@ export const jobsDb = new JobsDB();
 
 export const initializeJobs = async () => {
   try {
-    console.log("initializeJobs: Starting job initialization");
+    // console.log("initializeJobs: Starting job initialization");
     
     // Clear existing jobs to ensure fresh data without company field
-    console.log("initializeJobs: Clearing existing jobs for fresh seed");
+    // console.log("initializeJobs: Clearing existing jobs for fresh seed");
     await jobsDb.jobs.clear();
     
-    console.log("initializeJobs: Seeding database with fresh jobs");
+    // console.log("initializeJobs: Seeding database with fresh jobs");
     await jobsDb.jobs.bulkAdd(jobsSeed);
-    console.log(`initializeJobs: Seeded ${jobsSeed.length} jobs`);
+    // console.log(`initializeJobs: Seeded ${jobsSeed.length} jobs`);
     
   } catch (error) {
     console.error("initializeJobs: Error initializing jobs:", error);
@@ -39,7 +39,7 @@ export const getAllJobs = async (params?: {
   pageSize?: number;
 }) => {
   try {
-    console.log("getAllJobs: Called with params:", params);
+    // console.log("getAllJobs: Called with params:", params);
     
     let query = jobsDb.jobs.orderBy('createdAt');
   
@@ -72,7 +72,7 @@ export const getAllJobs = async (params?: {
       pageSize: params.pageSize
     };
   }
-  console.log("getAllJobs: Returning jobs:", jobs.length);
+  // console.log("getAllJobs: Returning jobs:", jobs.length);
   
   return { data: jobs, total: jobs.length };
   } catch (error) {
