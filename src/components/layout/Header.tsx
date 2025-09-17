@@ -92,13 +92,13 @@ const Header: React.FC = () => {
                 <Button
                   variant="default"
                   size="sm"
-                  className="w-full"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
                   onClick={() => {
                     navigate("/hr-login");
                     setIsMenuOpen(false);
                   }}
                 >
-                  HR Login
+                  Login
                 </Button>
               </div>
             </div>
