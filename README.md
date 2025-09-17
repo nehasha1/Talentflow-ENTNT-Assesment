@@ -1,8 +1,8 @@
-# TalentFlow v2
+# TalentFlow
 
 A modern, full-stack talent management platform built with React, TypeScript, and Vite. TalentFlow provides comprehensive tools for HR teams to manage job postings, candidate assessments, and recruitment workflows.
 
-## 🚀 Features
+## Features
 
 ### Core Functionality
 
@@ -30,7 +30,7 @@ A modern, full-stack talent management platform built with React, TypeScript, an
 - **Mock API**: Complete mock backend with MSW (Mock Service Worker)
 - **Local Storage**: Persistent data storage with IndexedDB via Dexie
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -59,7 +59,7 @@ A modern, full-stack talent management platform built with React, TypeScript, an
 - **TypeScript ESLint** - TypeScript-specific linting rules
 - **Faker.js** - Fake data generation for development
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -91,7 +91,7 @@ src/
 └── main.tsx            # Application entry point
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -104,7 +104,7 @@ src/
 
    ```bash
    git clone <repository-url>
-   cd talentflowV2
+   cd talentflow
    ```
 
 2. **Install dependencies**
@@ -131,7 +131,7 @@ npm run preview  # Preview production build
 npm run lint     # Run ESLint
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 ### Frontend Architecture
 
@@ -153,7 +153,7 @@ npm run lint     # Run ESLint
 - **Nested Routes**: Dashboard with nested assessment routes
 - **Route Protection**: Automatic redirects for HR login flow
 
-## 🔧 Technical Decisions
+## Technical Decisions
 
 ### Why React 19?
 
@@ -178,7 +178,7 @@ npm run lint     # Run ESLint
 ### Why MSW over JSON Server?
 
 - **Realistic mocking**: Intercepts actual HTTP requests
-- **Development/Production parity**: Same code works in both environments
+- **Development**: Same code works in both environments
 - **Better debugging**: Network tab shows actual requests
 - **Flexible**: Easy to add complex business logic
 
@@ -189,7 +189,7 @@ npm run lint     # Run ESLint
 - **Customizable**: Easy to extend with custom design system
 - **Performance**: Purges unused styles in production
 
-## 🐛 Known Issues & Solutions
+## Known Issues & Solutions
 
 ### 1. SPA Routing on Vercel
 
@@ -211,7 +211,7 @@ npm run lint     # Run ESLint
 **Issue**: New assessments not appearing in list after creation
 **Solution**: Added multiple refresh triggers (location change, window focus)
 
-## 🚀 Deployment
+## Deployment
 
 ### Vercel (Recommended)
 
@@ -226,7 +226,7 @@ npm run lint     # Run ESLint
 - **GitHub Pages**: Use `gh-pages` package with proper base path
 - **AWS S3 + CloudFront**: Configure error pages to redirect to `index.html`
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 ### Planned Features
 
@@ -248,7 +248,7 @@ npm run lint     # Run ESLint
 - [ ] Add internationalization (i18n)
 - [ ] Implement dark mode theme
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -256,11 +256,11 @@ npm run lint     # Run ESLint
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [React](https://reactjs.org/) - The UI library
 - [Vite](https://vitejs.dev/) - The build tool
@@ -271,4 +271,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**TalentFlow v2** - Streamlining talent management for modern HR teams.
+**TalentFlow** - Streamlining talent management for modern HR teams.
