@@ -15,10 +15,19 @@ class AssessmentsDB extends Dexie {
 export const assessmentsDb = new AssessmentsDB();
 
 export const initializeAssessments = async () => {
-  const count = await assessmentsDb.assessments.count();
-  if (count === 0) {
+  try {
+    const assessmentsCount = await assessmentsDb.assessments.count();
+    if(assessmentsCount > 0) {
+      return;
+    }
+
+    await assessmentsDb.assessments.clear();
     await assessmentsDb.assessments.bulkAdd(assessmentsSeed);
     // console.log(`Seeded ${assessmentsSeed.length} assessments`);
+  
+  } catch (error) {
+    console.error("Error initializing assessments:", error);
+    // throw error;
   }
 };
 

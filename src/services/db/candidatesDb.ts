@@ -32,6 +32,11 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
 
 export const initializeCandidates = async () => {
   try {
+    const candidatesCount = await candidatesDb.candidates.count();
+    if(candidatesCount > 0) {
+      return;
+    }
+
     // console.log('Initializing candidates database...');
     
     // Clear existing database to ensure fresh start with new schema

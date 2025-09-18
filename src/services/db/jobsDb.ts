@@ -16,9 +16,14 @@ export const jobsDb = new JobsDB();
 
 export const initializeJobs = async () => {
   try {
+    const jobsCount = await jobsDb.jobs.count();
+    if(jobsCount > 0) {
+      return;
+    }
+
     // console.log("initializeJobs: Starting job initialization");
     
-    // Clear existing jobs to ensure fresh data without company field
+    // Clear existing jobs to ensure fresh data 
     // console.log("initializeJobs: Clearing existing jobs for fresh seed");
     await jobsDb.jobs.clear();
     
