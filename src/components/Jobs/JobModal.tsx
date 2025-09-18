@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { type Job } from "../../services/seed/jobsSeed";
+import { toast } from "react-hot-toast";
 
 interface JobModalProps {
   job?: Job | null;
@@ -59,10 +60,11 @@ const JobModal: React.FC<JobModalProps> = ({ job, onClose, onSave }) => {
       } else {
         await axios.post("/jobs", jobData);
       }
-
+      toast.success("Job saved successfully");
       onSave();
     } catch (error) {
       console.error("Error saving job:", error);
+      toast.error("Error saving job");
     } finally {
       setLoading(false);
     }

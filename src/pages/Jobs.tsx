@@ -4,6 +4,8 @@ import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 // Applications are now handled by candidates
 import JobModal from "../components/Jobs/JobModal";
+import { DeleteConfirmationModal } from "../components/Jobs/DeleteConfirmationModal";
+import { toast } from "react-hot-toast";
 
 interface JobsResponse {
   data: Job[];
@@ -25,6 +27,8 @@ const Jobs: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingJob, setEditingJob] = useState<Job | null>(null);
   const [draggedJob, setDraggedJob] = useState<Job | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [jobToDelete, setJobToDelete] = useState<Job | null>(null);
 
   const fetchJobs = async () => {
     try {
@@ -87,14 +91,16 @@ const Jobs: React.FC = () => {
   };
 
   const handleDelete = async (jobId: string) => {
-    if (window.confirm("Are you sure you want to delete this job?")) {
-      try {
-        // Note: We'll need to add DELETE endpoint to handlers
-        await axios.delete(`/jobs/${jobId}`);
-        fetchJobs();
-      } catch (error) {
-        console.error("Error deleting job:", error);
-      }
+    try {
+      // Note: We'll need to add DELETE endpoint to handlers
+      await axios.delete(`/jobs/${jobId}`);
+      toast.success("Job deleted successfully");
+      fetchJobs();
+      setShowDeleteModal(false);
+      setJobToDelete(null);
+    } catch (error) {
+      console.error("Error deleting job:", error);
+      toast.error("Error deleting job");
     }
   };
 
@@ -375,7 +381,10 @@ const Jobs: React.FC = () => {
                         {job.status === "active" ? "Archive" : "Unarchive"}
                       </button>
                       <button
-                        onClick={() => handleDelete(job.id)}
+                        onClick={() => {
+                          setShowDeleteModal(true);
+                          setJobToDelete(job);
+                        }}
                         className="text-red-600 cursor-pointer hover:text-red-700 text-sm font-medium"
                       >
                         Delete
@@ -448,6 +457,16 @@ const Jobs: React.FC = () => {
             setShowCreateModal(false);
             setEditingJob(null);
           }}
+        />
+      )}
+
+      {/* Delete Job Modal */}
+      {showDeleteModal && jobToDelete && (
+        <DeleteConfirmationModal
+          isOpen={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={() => handleDelete(jobToDelete.id)}
+          jobTitle={jobToDelete.title}
         />
       )}
     </div>
