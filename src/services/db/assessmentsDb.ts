@@ -80,3 +80,8 @@ export const getAssessmentStatistics = async () => {
     pendingAssessments: allAssessments.length - completedCount
   };
 };
+
+export const deleteAssessment = async (id: string) => {
+  await assessmentsDb.assessments.delete(id);
+  return true;
+};

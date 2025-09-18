@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { getAssessmentByJobId, saveAssessment, submitAssessmentResponse, getAllAssessments } from '../db/assessmentsDb';
+import { getAssessmentByJobId, saveAssessment, submitAssessmentResponse, getAllAssessments, deleteAssessment } from '../db/assessmentsDb';
 import { delay, maybeFail } from '../../utils/latency';
 
 export const assessmentsHandlers = [
@@ -53,5 +53,12 @@ export const assessmentsHandlers = [
     const responses = await request.json() as any;
     const result = await submitAssessmentResponse(params.jobId as string, responses);
     return HttpResponse.json(result);
+  }),
+
+  http.delete('/assessments/:id', async ({ params }) => {
+    await delay();
+    maybeFail();
+    await deleteAssessment(params.id as string);
+    return new HttpResponse(null, { status: 204 });
   }),
 ];

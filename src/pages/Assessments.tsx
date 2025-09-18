@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import type { Job } from "../services/seed/jobsSeed";
 import type { Assessment } from "../services/seed/assessmentsSeed";
+import { toast } from "react-hot-toast";
 
 interface AssessmentsResponse {
   data: Assessment[];
@@ -60,6 +61,17 @@ const Assessments: React.FC = () => {
     window.addEventListener("focus", handleFocus);
     return () => window.removeEventListener("focus", handleFocus);
   }, []);
+
+  const handleDeleteAssessment = async (assessmentId: string) => {
+    try {
+      await axios.delete(`/assessments/${assessmentId}`);
+      toast.success("Assessment deleted successfully");
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting assessment:", error);
+      toast.error("Error deleting assessment");
+    }
+  };
 
   // const handleCreateAssessment = (jobId: string) => {
   //   setSelectedJob(jobId);
@@ -249,6 +261,12 @@ const Assessments: React.FC = () => {
                         className="text-green-600 cursor-pointer hover:text-green-700 text-sm font-medium"
                       >
                         Results
+                      </button>
+                      <button
+                        onClick={() => handleDeleteAssessment(assessment.id)}
+                        className="text-red-600 cursor-pointer hover:text-red-700 text-sm font-medium"
+                      >
+                        Delete
                       </button>
                     </div>
                   </div>
