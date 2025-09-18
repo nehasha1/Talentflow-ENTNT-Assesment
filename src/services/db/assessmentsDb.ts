@@ -42,12 +42,12 @@ export const getAllAssessments = async () => {
 };
 
 export const saveAssessment = async (assessment: Assessment) => {
-  console.log("Saving assessment to database:", assessment);
+  // console.log("Saving assessment to database:", assessment);
   await assessmentsDb.assessments.put(assessment);
   
   // Verify it was saved
-  const saved = await assessmentsDb.assessments.get(assessment.id);
-  console.log("Verification - Assessment saved:", saved);
+  // const saved = await assessmentsDb.assessments.get(assessment.id);
+  // console.log("Verification - Assessment saved:", saved);
   
   return assessment;
 };

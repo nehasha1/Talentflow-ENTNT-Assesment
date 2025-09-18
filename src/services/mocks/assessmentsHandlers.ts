@@ -31,6 +31,7 @@ export const assessmentsHandlers = [
 
   http.get('/assessments/:jobId', async ({ params }) => {
     await delay();
+    console.log('getAssessmentByJobId', params.jobId);
     
     const assessment = await getAssessmentByJobId(params.jobId as string);
     return HttpResponse.json(assessment);

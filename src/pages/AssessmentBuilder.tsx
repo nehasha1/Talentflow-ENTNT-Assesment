@@ -9,6 +9,8 @@ interface AssessmentBuilderProps {}
 
 const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
   const { jobId } = useParams<{ jobId: string }>();
+  // console.log("jobId:", jobId);
+
   const navigate = useNavigate();
   const [job, setJob] = useState<Job | null>(null);
   const [assessment, setAssessment] = useState<Assessment | null>(null);
@@ -28,7 +30,7 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
       const [jobResponse, assessmentResponse] = await Promise.all([
         axios.get(`/jobs/${jobId}`),
         axios
-          .get(`/assessments?jobId=${jobId}`)
+          .get(`/assessments/${jobId}`)
           .catch(() => ({ data: { data: [] } })),
       ]);
 
@@ -36,7 +38,9 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
 
       // Load existing assessment or create new one
       const assessments = assessmentResponse.data.data;
-      if (assessments.length > 0) {
+      console.log("assessments:", assessments);
+
+      if (assessments) {
         setAssessment(assessments[0]);
       } else {
         // Create new assessment
@@ -174,7 +178,10 @@ const AssessmentBuilder: React.FC<AssessmentBuilderProps> = () => {
     if (!assessment) return;
 
     try {
+      // console.log("Saving assessment:", assessment);
+
       await axios.post("/assessments", assessment);
+      toast.success("Assessment saved successfully");
       navigate("/dashboard/assessments");
     } catch (error) {
       console.error("Error saving assessment:", error);
