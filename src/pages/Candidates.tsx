@@ -4,6 +4,7 @@ import axios from "axios";
 import type { Candidate } from "../services/seed/candidateSeed";
 import type { Job } from "../services/seed/jobsSeed";
 import NotesWithMentions from "../components/NotesWithMentions";
+import { toast } from "react-hot-toast";
 
 const Candidates: React.FC = () => {
   const navigate = useNavigate();
@@ -103,6 +104,16 @@ const Candidates: React.FC = () => {
   const getJobTitle = (jobId: string) => {
     const job = jobs.find((j) => j.id === jobId);
     return job ? job.title : "Unknown Job";
+  };
+  const handleDeleteCandidate = async (candidateId: string) => {
+    try {
+      await axios.delete(`/applications/${candidateId}`);
+      toast.success("Candidate deleted successfully");
+      fetchCandidates();
+    } catch (error) {
+      console.error("Error deleting candidate:", error);
+      toast.error("Error deleting candidate");
+    }
   };
 
   const handleDragStart = (e: React.DragEvent, candidate: Candidate) => {
@@ -374,25 +385,46 @@ const Candidates: React.FC = () => {
                       >
                         View
                       </button>
-                      <button
-                        onClick={() => handleAddNote(candidate)}
-                        className="cursor-pointer text-xs text-emerald-600 hover:text-emerald-700 p-1 rounded hover:bg-gray-100"
-                        title="Add Notes"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => handleAddNote(candidate)}
+                          className="cursor-pointer text-xs text-emerald-600 hover:text-emerald-700 p-1 rounded hover:bg-gray-100"
+                          title="Add Notes"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                          />
-                        </svg>
-                      </button>
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCandidate(candidate.id)}
+                          className="cursor-pointer text-xs text-red-600 hover:text-red-700 p-1 rounded hover:bg-gray-100"
+                          title="Delete"
+                        >
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
