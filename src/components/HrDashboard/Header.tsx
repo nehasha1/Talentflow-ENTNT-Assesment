@@ -16,7 +16,6 @@ const Header: React.FC = () => {
     navigate("/");
   };
 
-  // Close profile dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
@@ -80,7 +79,6 @@ const Header: React.FC = () => {
               </svg>
             </button>
 
-            {/* Profile Dropdown */}
             {isProfileOpen && (
               <div className="cursor-pointer absolute -right-1/3 mt-2 w-64 bg-black border-2 border-purple-600/50 shadow-xl py-2 z-50">
                 {/* User Info Section */}
