@@ -4,7 +4,7 @@ import Header from "../HrDashboard/Header";
 
 const HrLayout: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Header />
       <main>
         <Outlet />

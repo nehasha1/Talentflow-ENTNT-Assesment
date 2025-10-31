@@ -33,7 +33,19 @@ const techTags = [
 // Job types as provided by user
 const jobTypes: Job['jobType'][] = ['Full-time', 'Remote', 'Part-time', 'Contract'];
 
-// Popular tech companies for more realistic data
+// Indian cities for localization
+const indianCities = [
+  'Bengaluru, Karnataka',
+  'Hyderabad, Telangana',
+  'Pune, Maharashtra',
+  'Mumbai, Maharashtra',
+  'Gurugram, Haryana',
+  'Noida, Uttar Pradesh',
+  'Chennai, Tamil Nadu',
+  'New Delhi, Delhi',
+  'Kochi, Kerala',
+  'Ahmedabad, Gujarat'
+];
 
 function generateJob(index: number): Job {
   const title = faker.helpers.arrayElement(jobTitles);
@@ -50,8 +62,13 @@ function generateJob(index: number): Job {
     requirements: Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, 
       () => faker.lorem.sentence()
     ),
-    salary: `$${faker.number.int({ min: 50, max: 200 })}K - $${faker.number.int({ min: 200, max: 300 })}K`,
-    location: faker.location.city() + ', ' + faker.location.state(),
+    // Salary in INR LPA (Lakhs Per Annum)
+    salary: (() => {
+      const min = faker.number.int({ min: 4, max: 20 });
+      const max = Math.max(min + 2, min + faker.number.int({ min: 2, max: 10 }));
+      return `₹${min}–₹${max} LPA`;
+    })(),
+    location: faker.helpers.arrayElement(indianCities),
     jobType: faker.helpers.arrayElement(jobTypes),
     createdAt: faker.date.past({ years: 1 })
   };

@@ -22,9 +22,19 @@ export interface Candidate {
 
 const stages: Candidate['stage'][] = ['applied', 'screening', 'interview', 'offer', 'hired', 'rejected'];
 
+// Curated Indian names for localization
+const indianFirstNames = [
+  'Aarav','Vihaan','Vivaan','Aditya','Arjun','Sai','Ishaan','Reyansh','Krishna','Muhammad',
+  'Ananya','Aadhya','Diya','Ira','Aarohi','Myra','Anika','Navya','Sara','Aisha'
+];
+const indianLastNames = [
+  'Sharma','Verma','Gupta','Agarwal','Reddy','Iyer','Patel','Khan','Singh','Kaur',
+  'Nair','Pillai','Shetty','Das','Ghosh','Chatterjee','Mukherjee','Bose','Banerjee','Rao'
+];
+
 function generateCandidate(index: number, jobIds: string[]): Candidate {
-  const firstName = faker.person.firstName();
-  const lastName = faker.person.lastName();
+  const firstName = faker.helpers.arrayElement(indianFirstNames);
+  const lastName = faker.helpers.arrayElement(indianLastNames);
   
   // Generate additional application-specific fields
   const techSkills = [
@@ -52,10 +62,10 @@ ${firstName} ${lastName}`;
   return {
     id: `candidate-${index + 1}`,
     name: `${firstName} ${lastName}`,
-    email: faker.internet.email({ firstName, lastName }),
+    email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${faker.number.int({min:1,max:999})}@gmail.com`,
     stage: faker.helpers.arrayElement(stages),
     jobId: faker.helpers.arrayElement(jobIds),
-    phone: faker.phone.number(),
+    phone: `+91 ${faker.number.int({ min: 6000000000, max: 9999999999 }).toString()}`,
     resume: faker.internet.url(),
     notes: Array.from({ length: faker.number.int({ min: 0, max: 3 }) }, 
       () => faker.lorem.sentence()

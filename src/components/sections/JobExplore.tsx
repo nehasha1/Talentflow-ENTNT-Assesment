@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import JobCard from "../common/JobCard";
+import Reveal from "../Reveal";
 import { Button } from "../ui/Button";
 import axios from "axios";
 import { type Job } from "../../services/seed/jobsSeed";
@@ -66,51 +67,68 @@ const JobExplore: React.FC = () => {
   return (
     <section
       id="jobs"
-      className="flex flex-col items-center gap-10 py-16 lg:py-24 bg-white"
+      className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 py-24 lg:py-32"
     >
-      <div className="flex items-center gap-5">
-        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-white to-emerald-600/70 rounded-full"></span>
-        <p className="border md:text-base sm:text-sm text-xs md:px-8 sm:px-6 px-4 py-2 rounded-full drop-shadow-md font-bold uppercase border-emerald-600 text-emerald-800">
-          Job Opportunities
-        </p>
-        <span className="md:w-40 sm:w-25 w-12 h-[2px] bg-gradient-to-r from-emerald-600/70 to-white rounded-full"></span>
+      {/* Section Number */}
+      <div className="absolute top-24 right-12 text-9xl font-black text-gray-100 leading-none hidden lg:block">
+        04
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div className="relative z-10 max-w-[1600px] mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Explore Available Positions
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover exciting career opportunities posted by top companies. Find
-            your perfect match today.
-          </p>
+        <div className="mb-16">
+          <Reveal>
+            <div className="inline-block text-purple-600 font-bold text-sm uppercase tracking-widest mb-6">
+              Opportunities
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-black leading-tight mb-8 max-w-4xl">
+              EXPLORE
+              <br />
+              <span className="text-purple-600">AVAILABLE</span>
+              <br />
+              POSITIONS
+            </h2>
+          </Reveal>
+
+          <Reveal delayMs={200}>
+            <p className="text-xl text-gray-600 font-light leading-relaxed max-w-2xl">
+              Discover exciting career opportunities posted by top companies. Find
+              your perfect match today.
+            </p>
+          </Reveal>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {jobTypes.map((type) => (
-            <button
-              key={type}
-              onClick={() => {
-                setSelectedType(type);
-                setVisibleJobs(3);
-              }}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                selectedType === type
-                  ? "bg-emerald-600 text-white shadow-md"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {type}
-            </button>
-          ))}
-        </div>
+        {/* Filters - Horizontal Strip */}
+        <Reveal delayMs={300}>
+          <div className="flex flex-wrap gap-3 mb-16 pb-8 border-b-2 border-gray-200">
+            {jobTypes.map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  setSelectedType(type);
+                  setVisibleJobs(3);
+                }}
+                className={`px-8 py-4 text-base font-bold transition-all duration-300 hover-lift border-2 ${
+                  selectedType === type
+                    ? "bg-black text-white border-black shadow-xl"
+                    : "bg-white text-gray-700 border-gray-300 hover:border-black"
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </Reveal>
 
         {/* Job Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
-          {displayedJobs.map((job) => (
-            <JobCard key={job.id} job={job} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-10">
+          {displayedJobs.map((job, idx) => (
+            <Reveal key={job.id} delayMs={idx * 120}>
+              <JobCard job={job} />
+            </Reveal>
           ))}
         </div>
 
@@ -121,7 +139,7 @@ const JobExplore: React.FC = () => {
               variant="outline"
               size="lg"
               onClick={loadMore}
-              className="border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white"
+              className="border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white"
             >
               Load More Jobs
             </Button>
@@ -156,28 +174,42 @@ const JobExplore: React.FC = () => {
         )}
 
         {/* CTA Section */}
-        <div className="mt-16 text-center bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-8 lg:p-12">
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Ready to Find Your Dream Job?
-          </h3>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join thousands of professionals who have found their perfect career
-            match through our platform.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              variant="default"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
-              size="lg"
-              onClick={handleBrowseAllJobs}
-            >
-              Browse All Jobs
-            </Button>
-            <Button variant="outline" size="lg">
-              Create Job Alert
-            </Button>
+        <Reveal delayMs={300}>
+          <div className="relative mt-20 text-center bg-gradient-to-br from-purple-600 via-pink-600 to-rose-600 rounded-3xl p-8 lg:p-12 overflow-hidden">
+            {/* Background decorative elements */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl anim-float"></div>
+              <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl anim-float-reverse"></div>
+            </div>
+            
+            <div className="relative z-10">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6">
+                Ready to Find Your Dream Job?
+              </h3>
+              <p className="text-xl text-white/90 mb-10 max-w-3xl mx-auto font-medium">
+                Join thousands of professionals who have found their perfect career
+                match through our platform.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  variant="default"
+                  className="bg-white text-purple-700 hover:bg-purple-50 px-8 py-4 text-lg font-semibold shadow-2xl hover-lift transform transition-all duration-300"
+                  size="lg"
+                  onClick={handleBrowseAllJobs}
+                >
+                  Browse All Jobs →
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-2 border-white text-white hover:bg-white/20 px-8 py-4 text-lg font-semibold hover-lift transform transition-all duration-300"
+                >
+                  Create Job Alert
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

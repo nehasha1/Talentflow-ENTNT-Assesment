@@ -1,6 +1,148 @@
 # TalentFlow
 
+**UPDATED BY NEHA SHA (2022BCSE062) from NIT SRINAGAR**
+
 A modern, full-stack talent management platform built with React, TypeScript, and Vite. TalentFlow provides comprehensive tools for HR teams to manage job postings, candidate assessments, and recruitment workflows.
+
+## Assessment Tasks Completed
+
+### Core Flows Implemented
+
+#### 1. Jobs Board
+- ✅ List with server-like pagination & filtering (title, status, tags)
+- ✅ Create/Edit job in modal with validation (title required, unique slug)
+- ✅ Archive/Unarchive functionality
+- ✅ Reorder via drag-and-drop with **optimistic updates** and rollback on failure
+- ✅ Deep link to a job: `/jobs/:jobId`
+- ✅ Indian job context (₹ LPA salary, Indian cities)
+
+#### 2. Candidates
+- ✅ Virtualized list supporting 1000+ seeded candidates
+- ✅ Client-side search by name or email
+- ✅ Server-like filter based on current stage
+- ✅ Candidate profile route: `/candidates/:id` with timeline of status changes
+- ✅ Kanban board with drag-and-drop for stage transitions
+- ✅ Notes with @mentions (rendered with suggestions from local list)
+- ✅ Indian names and phone numbers (+91 format)
+
+#### 3. Assessments
+- ✅ Assessment builder per job with sections
+- ✅ Multiple question types:
+  - Single-choice
+  - Multi-choice
+  - Short text
+  - Long text
+  - Numeric with range
+  - File upload (stub)
+- ✅ Live preview pane rendering assessment as fillable form
+- ✅ Local persistence (builder state and candidate responses)
+- ✅ Form runtime with validation rules (required, numeric range, max length)
+- ✅ Conditional questions (show/hide based on previous answers)
+
+#### 4. Data & "API"
+- ✅ Simulated REST API using MSW (Mock Service Worker)
+- ✅ Seed data:
+  - 25 jobs (mix of active and archived)
+  - 1000 candidates, randomly assigned to jobs and stages
+  - 3+ assessments, each with 10+ questions
+- ✅ Simulated network conditions:
+  - Artificial latency (50-200ms)
+  - Error rate (2% on write endpoints)
+- ✅ Local persistence with IndexedDB via Dexie
+  - Write-through to IndexedDB
+  - State restoration on refresh
+
+## Open Source Resources & Libraries Used
+
+### Buttons & UI Components
+- **Radix UI** - https://www.radix-ui.com/
+  - Accessible, unstyled UI primitives for building high-quality design systems
+  - Used for: Dialog, Dropdown, and other accessible components
+
+- **Class Variance Authority (CVA)** - https://cva.style/
+  - Component variant management for consistent button styles
+  - Used for: Button component variants and styling
+
+- **Shadcn/ui** (inspiration) - https://ui.shadcn.com/
+  - Beautifully designed components built with Radix UI and Tailwind CSS
+  - Used as reference for: Button, Card, and other UI components
+
+### Layout & Containers
+- **Tailwind CSS** - https://tailwindcss.com/
+  - Utility-first CSS framework for rapid UI development
+  - Used for: All layout, spacing, colors, and responsive design
+  - Documentation: https://tailwindcss.com/docs
+
+- **CSS Grid & Flexbox** (native CSS)
+  - Used for: Responsive grid layouts and flexible container alignment
+  - Reference: https://css-tricks.com/guides/css-grid/ & https://css-tricks.com/guides/flexbox/
+
+### Animations & Transitions
+- **CSS Animations** (custom keyframes)
+  - Fade-up, scale-in, slide-right animations
+  - Float animations for decorative elements
+  - Gradient-shift for animated text effects
+
+- **Intersection Observer API** (browser native)
+  - Scroll-triggered animations with custom Reveal component
+  - Used for: Animating sections when they enter viewport
+  - Reference: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+
+- **Framer Motion** (conceptual inspiration)
+  - Animation library patterns applied with vanilla CSS
+  - Reference: https://www.framer.com/motion/
+
+### Icons
+- **Lucide React** - https://lucide.dev/
+  - Beautiful & consistent icon toolkit
+  - Used for: All icons throughout the application
+
+### State Management
+- **React Hooks** (native)
+  - useState, useEffect, useRef for component state management
+  - Custom hooks for reusable logic
+
+### Form Handling & Validation
+- **React Hook Form** (patterns applied)
+  - Form validation patterns and best practices
+  - Reference: https://react-hook-form.com/
+
+### Styling Utilities
+- **Tailwind CSS Plugins**
+  - Custom animation utilities and variants
+  - Line-clamp utilities for text truncation
+
+- **CSS Variables**
+  - Custom theme variables for consistent design tokens
+  - Color system with OKLCH color space
+
+### Development Tools
+- **Vite** - https://vitejs.dev/
+  - Next generation frontend tooling
+  - Fast HMR and optimized builds
+
+- **TypeScript** - https://www.typescriptlang.org/
+  - Type-safe JavaScript development
+  - Better IDE support and error catching
+
+### Testing & Mocking
+- **MSW (Mock Service Worker)** - https://mswjs.io/
+  - API mocking that works in browser and Node.js
+  - Used for: Simulating REST API endpoints
+
+- **Dexie.js** - https://dexie.org/
+  - A wrapper library for IndexedDB
+  - Used for: Local data persistence
+
+### Additional Resources
+- **React Router** - https://reactrouter.com/
+  - Declarative routing for React applications
+  
+- **React Hot Toast** - https://react-hot-toast.com/
+  - Beautiful toast notifications
+  
+- **Faker.js** - https://fakerjs.dev/
+  - Generate massive amounts of fake data for testing
 
 ## Features
 

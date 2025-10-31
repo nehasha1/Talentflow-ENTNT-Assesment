@@ -41,10 +41,10 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   };
 
   return (
-    <Card className="hover:shadow-lg transition-all duration-300 border hover:border-emerald-200 cursor-pointer group">
+    <Card className="hover:shadow-lg transition-all duration-300 border hover:border-purple-200 cursor-pointer group">
       <div onClick={handleJobCardClick} className="flex items-start space-x-4">
         {/* Job Type Avatar */}
-        <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
           <span className="text-white font-semibold text-lg">
             {job.jobType?.charAt(0) || "J"}
           </span>
@@ -54,7 +54,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         <div className="flex-grow min-w-0">
           <div className="flex items-start justify-between mb-2">
             <div>
-              <h3 className="font-semibold text-gray-900 md:text-lg sm:text-base text-sm group-hover:text-emerald-600 transition-colors">
+              <h3 className="font-semibold text-gray-900 md:text-lg sm:text-base text-sm group-hover:text-purple-600 transition-colors">
                 {job.title}
               </h3>
               <p className="text-gray-600 md:text-sm text-xs">

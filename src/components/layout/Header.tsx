@@ -25,7 +25,7 @@ const Header: React.FC = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:underline hover:underline-offset-6 hover:text-emerald-600 font-medium transition-colors duration-200"
+                className="text-gray-700 hover:underline hover:underline-offset-6 hover:text-purple-600 font-medium transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             <Button
               variant="default"
               size="lg"
-              className="text-white bg-emerald-600 hover:bg-emerald-700"
+              className="text-white bg-purple-600 hover:bg-purple-700"
               onClick={() => navigate("/hr-login")}
             >
               Login
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-emerald-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="md:hidden p-2 rounded-md text-gray-700 hover:text-purple-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             onClick={toggleMenu}
           >
             <svg
@@ -82,7 +82,7 @@ const Header: React.FC = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200 px-2 py-1"
+                  className="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-200 px-2 py-1"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}

@@ -97,6 +97,17 @@ export const candidatesHandlers = [
     return HttpResponse.json(stats);
   }),
 
+  // Fast job application counts to avoid fetching all candidates on Jobs page
+  http.get('/applications/job-counts', async () => {
+    await delay();
+    const all = await candidatesDb.candidates.toArray();
+    const counts = all.reduce((acc: Record<string, number>, c) => {
+      acc[c.jobId] = (acc[c.jobId] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    return HttpResponse.json(counts);
+  }),
+
   http.post('/applications', async ({ request }) => {
     await delay();
     

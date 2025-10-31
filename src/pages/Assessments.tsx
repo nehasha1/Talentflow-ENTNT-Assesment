@@ -97,14 +97,17 @@ const Assessments: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <div className="flex gap-2 justify-between items-center">
+    <div className="max-w-[1800px] mx-auto px-6 lg:px-12 py-12">
+      <div className="mb-12">
+        <div className="flex gap-6 justify-between items-start">
           <div>
-            <h1 className="md:text-3xl sm:text-2xl text-xl font-bold text-emerald-600 mb-2">
-              Assessments
+            <div className="inline-block text-purple-600 font-bold text-sm uppercase tracking-widest mb-4">
+              Management
+            </div>
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-black leading-tight mb-4">
+              ASSESSMENTS
             </h1>
-            <p className="text-emerald-600/90 sm:text-sm text-xs">
+            <p className="text-xl text-gray-600 font-light">
               Create and manage candidate assessments
             </p>
           </div>
@@ -117,10 +120,10 @@ const Assessments: React.FC = () => {
                   setShowBuilder(true);
                 }
               }}
-              className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
+              className="bg-purple-600 cursor-pointer text-white px-8 py-4 font-bold hover:bg-purple-700 transition-all duration-200 flex items-center space-x-2 border-2 border-purple-600 hover-lift"
             >
               <svg
-                className="w-4 h-4"
+                className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -132,14 +135,14 @@ const Assessments: React.FC = () => {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <span className="md:text-sm text-xs">Create</span>
+              <span>CREATE</span>
             </button>
             {showBuilder && (
               <button
                 onClick={() => setShowBuilder(false)}
-                className="bg-emerald-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
+                className="bg-black cursor-pointer text-white px-8 py-4 font-bold hover:bg-gray-800 transition-all duration-200 border-2 border-black hover-lift"
               >
-                <span>Cancel</span>
+                <span>CANCEL</span>
               </button>
             )}
           </div>
@@ -148,34 +151,34 @@ const Assessments: React.FC = () => {
 
       {/* Job Selection */}
       {showBuilder && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
+        <div className="bg-black border-2 border-purple-600/30 p-8 mb-8">
+          <h2 className="text-2xl font-black text-white mb-6 uppercase">
             Select Job for Assessment
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {jobs.map((job) => (
               <div
                 key={job.id}
-                className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
+                className={`p-6 border-2 cursor-pointer transition-all duration-200 hover-lift ${
                   selectedJob === job.id
-                    ? "border-emerald-500 bg-emerald-50"
-                    : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                    ? "border-purple-600 bg-purple-600/20"
+                    : "border-purple-900/50 hover:border-purple-500 hover:bg-purple-600/10"
                 }`}
                 onClick={() => setSelectedJob(job.id)}
               >
-                <h3 className="font-medium text-gray-900">{job.title}</h3>
-                <p className="text-sm text-gray-600">{job.jobType}</p>
-                <p className="text-xs text-gray-500 mt-1">{job.location}</p>
+                <h3 className="font-bold text-white text-lg mb-2">{job.title}</h3>
+                <p className="text-sm text-purple-400 font-medium">{job.jobType}</p>
+                <p className="text-xs text-gray-400 mt-1">{job.location}</p>
               </div>
             ))}
           </div>
           {selectedJob && (
-            <div className="mt-6 flex justify-end space-x-3">
+            <div className="mt-8 flex justify-end">
               <button
                 onClick={() => navigate(`/assessments/builder/${selectedJob}`)}
-                className="px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors duration-200"
+                className="px-8 py-4 cursor-pointer bg-purple-600 text-white font-bold hover:bg-purple-700 transition-all duration-200 border-2 border-purple-600 hover-lift"
               >
-                Create
+                CREATE ASSESSMENT →
               </button>
             </div>
           )}
@@ -183,7 +186,7 @@ const Assessments: React.FC = () => {
       )}
 
       {/* Assessments List */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-white border-2 border-black">
         {assessments.length === 0 ? (
           <div className="text-center py-12">
             <svg
@@ -207,28 +210,28 @@ const Assessments: React.FC = () => {
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y-2 divide-gray-200">
             {assessments.map((assessment) => {
               const job = jobs.find((j) => j.id === assessment.jobId);
               return (
                 <div
                   key={assessment.id}
-                  className="p-6 hover:bg-gray-50 transition-colors duration-200"
+                  className="p-8 hover:bg-black hover:text-white transition-all duration-300 group"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="sm:text-lg text-sm font-medium text-gray-900">
+                      <div className="flex items-center space-x-3 mb-4">
+                        <h3 className="text-2xl font-black text-black group-hover:text-white transition-colors">
                           Assessment for {job?.title || "Unknown Job"}
                         </h3>
                       </div>
-                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">
-                        {assessment.sections.length} sections
+                      <span className="px-4 py-2 text-sm font-bold border-2 border-purple-600 bg-purple-600 text-white mb-4 inline-block">
+                        {assessment.sections.length} SECTIONS
                       </span>
-                      <p className="sm:text-sm text-xs text-gray-600 my-2">
+                      <p className="text-base text-gray-600 group-hover:text-gray-300 my-2 font-medium">
                         {job?.jobType} • {job?.location}
                       </p>
-                      <p className="sm:text-sm text-xs text-gray-600 font-semibold">
+                      <p className="text-lg text-black group-hover:text-white font-bold">
                         Total Questions:{" "}
                         {assessment.sections.reduce(
                           (total, section) => total + section.questions.length,
@@ -242,31 +245,31 @@ const Assessments: React.FC = () => {
                         onClick={() =>
                           navigate(`/assessments/builder/${assessment.jobId}`)
                         }
-                        className="text-red-600 cursor-pointer hover:text-emerald-700 text-sm font-medium"
+                        className="px-4 py-2 border-2 border-black text-black cursor-pointer hover:bg-black hover:text-white text-sm font-bold transition-all hover-lift"
                       >
-                        Edit
+                        EDIT
                       </button>
                       <button
                         onClick={() =>
                           navigate(`/assessments/preview/${assessment.jobId}`)
                         }
-                        className="text-blue-600 cursor-pointer hover:text-blue-700 text-sm font-medium"
+                        className="px-4 py-2 border-2 border-purple-600 text-purple-600 cursor-pointer hover:bg-purple-600 hover:text-white text-sm font-bold transition-all hover-lift"
                       >
-                        Preview
+                        PREVIEW
                       </button>
                       <button
                         onClick={() =>
                           navigate(`/assessments/results/${assessment.jobId}`)
                         }
-                        className="text-green-600 cursor-pointer hover:text-green-700 text-sm font-medium"
+                        className="px-4 py-2 bg-black text-white cursor-pointer hover:bg-gray-800 text-sm font-bold border-2 border-black transition-all hover-lift"
                       >
-                        Results
+                        RESULTS
                       </button>
                       <button
                         onClick={() => handleDeleteAssessment(assessment.id)}
-                        className="text-red-600 cursor-pointer hover:text-red-700 text-sm font-medium"
+                        className="px-4 py-2 border-2 border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white text-sm font-bold transition-all hover-lift"
                       >
-                        Delete
+                        DELETE
                       </button>
                     </div>
                   </div>

@@ -87,7 +87,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-emerald-50 bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-purple-50 bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
@@ -129,7 +129,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   onChange={(e) =>
                     setFormData({ ...formData, candidateName: e.target.value })
                   }
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
                     errors.candidateName ? "border-red-300" : "border-gray-300"
                   }`}
                   placeholder="John Doe"
@@ -151,7 +151,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   onChange={(e) =>
                     setFormData({ ...formData, candidateEmail: e.target.value })
                   }
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
                     errors.candidateEmail ? "border-red-300" : "border-gray-300"
                   }`}
                   placeholder="john@example.com"
@@ -173,7 +173,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   onChange={(e) =>
                     setFormData({ ...formData, candidatePhone: e.target.value })
                   }
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
                     errors.candidatePhone ? "border-red-300" : "border-gray-300"
                   }`}
                   placeholder="+1 (555) 123-4567"
@@ -195,7 +195,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   onChange={(e) =>
                     setFormData({ ...formData, education: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Bachelor's in Computer Science"
                 />
               </div>
@@ -264,7 +264,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 transition-colors duration-200"
+                className="px-4 py-2 cursor-pointer bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors duration-200"
               >
                 {loading ? "Submitting..." : "Submit Application"}
               </button>

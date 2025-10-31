@@ -74,7 +74,7 @@ const JobDetails: React.FC = () => {
             </p>
             <Button
               variant="default"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="bg-purple-600 hover:bg-purple-700 text-white"
               onClick={() => navigate("/jobs")}
             >
               Browse All Jobs
@@ -94,7 +94,7 @@ const JobDetails: React.FC = () => {
             <Button
               variant="outline"
               onClick={() => navigate("/jobs")}
-              className="flex items-center space-x-2 hover:bg-gray-100 hover:text-emerald-600"
+              className="flex items-center space-x-2 hover:bg-gray-100 hover:text-purple-600"
             >
               <svg
                 className="w-4 h-4"

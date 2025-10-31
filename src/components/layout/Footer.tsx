@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="text-gray-400 hover:text-emerald-600 transition-colors"
+                className="text-gray-400 hover:text-purple-600 transition-colors"
                 aria-label="Twitter"
               >
                 <svg
@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-emerald-600 transition-colors"
+                className="text-gray-400 hover:text-purple-600 transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg
@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
                     <li key={link.name}>
                       <a
                         href={link.href}
-                        className="text-gray-600 hover:text-emerald-600 sm:text-sm text-xs transition-colors"
+                        className="text-gray-600 hover:text-purple-600 sm:text-sm text-xs transition-colors"
                       >
                         {link.name}
                       </a>
@@ -99,7 +99,7 @@ const Footer: React.FC = () => {
                     <li key={link.name}>
                       <a
                         href={link.href}
-                        className="text-gray-600 hover:text-emerald-600 sm:text-sm text-xs transition-colors"
+                        className="text-gray-600 hover:text-purple-600 sm:text-sm text-xs transition-colors"
                       >
                         {link.name}
                       </a>
@@ -117,7 +117,7 @@ const Footer: React.FC = () => {
                     <li key={link.name}>
                       <a
                         href={link.href}
-                        className="text-gray-600 hover:text-emerald-600 sm:text-sm text-xs transition-colors"
+                        className="text-gray-600 hover:text-purple-600 sm:text-sm text-xs transition-colors"
                       >
                         {link.name}
                       </a>

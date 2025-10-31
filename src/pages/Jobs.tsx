@@ -17,7 +17,7 @@ interface JobsResponse {
 const Jobs: React.FC = () => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [candidates, setCandidates] = useState<any[]>([]);
+  const [jobApplicationCounts, setJobApplicationCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -52,13 +52,13 @@ const Jobs: React.FC = () => {
     }
   };
 
-  const fetchCandidates = async () => {
+  const fetchApplicationCounts = async () => {
     try {
-      const response = await axios.get("/candidates");
-      setCandidates(response.data.data || []);
+      const response = await axios.get("/applications/job-counts");
+      setJobApplicationCounts(response.data || {});
     } catch (error) {
-      console.error("Error fetching candidates:", error);
-      setCandidates([]);
+      console.error("Error fetching application counts:", error);
+      setJobApplicationCounts({});
     }
   };
 
@@ -66,7 +66,7 @@ const Jobs: React.FC = () => {
 
   useEffect(() => {
     fetchJobs();
-    fetchCandidates();
+    fetchApplicationCounts();
   }, [search, statusFilter, currentPage, pageSize]);
 
   const handleSearch = (value: string) => {
@@ -105,7 +105,8 @@ const Jobs: React.FC = () => {
   };
 
   const getApplicationsForJob = (jobId: string) => {
-    return candidates.filter((candidate) => candidate.jobId === jobId);
+    const count = jobApplicationCounts[jobId] || 0;
+    return { length: count } as any;
   };
 
   const handleReorder = async (fromIndex: number, toIndex: number) => {
@@ -174,19 +175,25 @@ const Jobs: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <div className="flex sm:flex-row flex-col sm:gap-0 gap-2 justify-between items-center">
+    <div className="max-w-[1800px] mx-auto px-6 lg:px-12 py-12">
+      {/* Header Section */}
+      <div className="mb-12">
+        <div className="flex sm:flex-row flex-col sm:gap-0 gap-6 justify-between items-start">
           <div>
-            <h1 className="text-3xl font-bold text-emerald-600 mb-2">Jobs</h1>
-            <p className="text-emerald-600/90">
+            <div className="inline-block text-purple-600 font-bold text-sm uppercase tracking-widest mb-4">
+              Management
+            </div>
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-black leading-tight mb-4">
+              JOBS
+            </h1>
+            <p className="text-xl text-gray-600 font-light">
               Create and manage your job postings
             </p>
           </div>
           <div className="flex items-center space-x-3">
             <button
               onClick={() => navigate("/dashboard/candidates")}
-              className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2"
+              className="bg-black cursor-pointer text-white px-6 py-3 font-bold hover:bg-gray-800 transition-all duration-200 flex items-center space-x-2 border-2 border-black hover-lift"
             >
               <svg
                 className="w-5 h-5"
@@ -201,11 +208,11 @@ const Jobs: React.FC = () => {
                   d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
                 />
               </svg>
-              <span className="md:text-sm text-xs">View Candidates</span>
+              <span>VIEW CANDIDATES</span>
             </button>
             <button
               onClick={() => setShowCreateModal(true)}
-              className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center space-x-2"
+              className="bg-purple-600 text-white px-6 py-3 font-bold hover:bg-purple-700 transition-all duration-200 flex items-center space-x-2 border-2 border-purple-600 hover-lift"
             >
               <svg
                 className="w-5 h-5"
@@ -220,14 +227,14 @@ const Jobs: React.FC = () => {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <span className="md:text-sm text-xs">Create</span>
+              <span>CREATE</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+      <div className="bg-black border-2 border-purple-600/30 p-6 mb-8">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <input
@@ -235,14 +242,14 @@ const Jobs: React.FC = () => {
               placeholder="Search jobs by title or tags..."
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-white/10 border-2 border-purple-600/50 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:bg-white/20 transition-all"
             />
           </div>
           <div className="sm:w-48">
             <select
               value={statusFilter}
               onChange={(e) => handleStatusFilter(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-white/10 border-2 border-purple-600/50 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:bg-white/20 transition-all [&>option]:bg-black [&>option]:text-white"
             >
               <option value="">All Status</option>
               <option value="active">Active</option>
@@ -253,7 +260,7 @@ const Jobs: React.FC = () => {
       </div>
 
       {/* Jobs List */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-white border-2 border-black">
         {jobs.length === 0 ? (
           <div className="text-center py-12">
             <svg
@@ -288,7 +295,7 @@ const Jobs: React.FC = () => {
                   onDragStart={(e) => handleDragStart(e, job)}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, index)}
-                  className={`p-6 hover:bg-gray-50 transition-colors duration-200 cursor-move ${
+                  className={`p-6 border-b-2 border-gray-200 hover:bg-black hover:text-white transition-all duration-300 cursor-move group ${
                     draggedJob?.id === job.id ? "opacity-50" : ""
                   }`}
                 >
@@ -305,30 +312,30 @@ const Jobs: React.FC = () => {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="text-lg font-medium text-gray-900">
+                          <h3 className="text-2xl font-black text-black group-hover:text-white transition-colors">
                             {job.title}
                           </h3>
                           <span
-                            className={`px-2 py-1 text-xs font-medium rounded-full ${
+                            className={`px-3 py-1 text-xs font-bold border-2 ${
                               job.status === "active"
-                                ? "bg-emerald-100 text-emerald-800"
-                                : "bg-gray-100 text-gray-800"
+                                ? "bg-purple-600 text-white border-purple-600"
+                                : "bg-gray-100 text-gray-800 border-gray-300"
                             }`}
                           >
-                            {job.status}
+                            {job.status.toUpperCase()}
                           </span>
                         </div>
-                        <p className="sm:text-sm text-xs font-semibold text-gray-600 mb-2">
+                        <p className="text-base font-semibold text-gray-600 group-hover:text-gray-300 mb-2">
                           {job.location}
                         </p>
-                        <p className="sm:text-sm text-xs text-gray-500 mb-3">
+                        <p className="text-sm text-gray-500 group-hover:text-gray-400 mb-3">
                           {job.description.substring(0, 150)}...
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {job.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                              className="px-3 py-1 bg-black text-white text-xs font-bold border border-white/20 group-hover:bg-white group-hover:text-black transition-colors"
                             >
                               {tag}
                             </span>
@@ -364,30 +371,30 @@ const Jobs: React.FC = () => {
                         onClick={() =>
                           navigate(`/dashboard/candidates?job=${job.id}`)
                         }
-                        className="text-emerald-600 cursor-pointer hover:text-emerald-700 text-sm font-medium"
+                        className="px-4 py-2 bg-black text-white cursor-pointer hover:bg-gray-800 text-sm font-bold border-2 border-black transition-all hover-lift"
                       >
-                        View
+                        VIEW
                       </button>
                       <button
                         onClick={() => setEditingJob(job)}
-                        className="text-blue-600 cursor-pointer hover:text-blue-700 text-sm font-medium"
+                        className="px-4 py-2 border-2 border-black text-black cursor-pointer hover:bg-black hover:text-white text-sm font-bold transition-all hover-lift"
                       >
-                        Edit
+                        EDIT
                       </button>
                       <button
                         onClick={() => handleArchive(job)}
-                        className="text-orange-600 cursor-pointer hover:text-orange-700 text-sm font-medium"
+                        className="px-4 py-2 border-2 border-orange-600 text-orange-600 cursor-pointer hover:bg-orange-600 hover:text-white text-sm font-bold transition-all hover-lift"
                       >
-                        {job.status === "active" ? "Archive" : "Unarchive"}
+                        {job.status === "active" ? "ARCHIVE" : "UNARCHIVE"}
                       </button>
                       <button
                         onClick={() => {
                           setShowDeleteModal(true);
                           setJobToDelete(job);
                         }}
-                        className="text-red-600 cursor-pointer hover:text-red-700 text-sm font-medium"
+                        className="px-4 py-2 border-2 border-red-600 text-red-600 cursor-pointer hover:bg-red-600 hover:text-white text-sm font-bold transition-all hover-lift"
                       >
-                        Delete
+                        DELETE
                       </button>
                     </div>
                   </div>
@@ -397,9 +404,9 @@ const Jobs: React.FC = () => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="px-6 py-4 border-t border-gray-200">
+              <div className="px-8 py-6 border-t-2 border-gray-200 bg-gray-50">
                 <div className="flex sm:flex-row sm:gap-0 gap-5 flex-col items-center justify-between">
-                  <div className="md:text-sm text-xs text-gray-700">
+                  <div className="md:text-base text-sm text-black font-bold">
                     Showing {(currentPage - 1) * pageSize + 1} to{" "}
                     {Math.min(currentPage * pageSize, totalJobs)} of {totalJobs}{" "}
                     jobs
@@ -410,18 +417,18 @@ const Jobs: React.FC = () => {
                         setCurrentPage(Math.max(1, currentPage - 1))
                       }
                       disabled={currentPage === 1}
-                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 text-sm font-bold border-2 border-black text-black hover:bg-black hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-black"
                     >
-                      Previous
+                      PREVIOUS
                     </button>
                     {[...Array(totalPages)].map((_, i) => (
                       <button
                         key={i + 1}
                         onClick={() => setCurrentPage(i + 1)}
-                        className={`px-3 py-1 text-sm border rounded-md ${
+                        className={`px-4 py-2 text-sm font-bold border-2 transition-all hover-lift ${
                           currentPage === i + 1
-                            ? "bg-emerald-600 text-white border-emerald-600"
-                            : "border-gray-300 hover:bg-gray-50"
+                            ? "bg-purple-600 text-white border-purple-600"
+                            : "border-black text-black hover:bg-black hover:text-white"
                         }`}
                       >
                         {i + 1}
@@ -432,9 +439,9 @@ const Jobs: React.FC = () => {
                         setCurrentPage(Math.min(totalPages, currentPage + 1))
                       }
                       disabled={currentPage === totalPages}
-                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 text-sm font-bold border-2 border-black text-black hover:bg-black hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-black"
                     >
-                      Next
+                      NEXT
                     </button>
                   </div>
                 </div>

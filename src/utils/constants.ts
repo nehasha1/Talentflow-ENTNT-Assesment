@@ -100,5 +100,5 @@ export const SAMPLE_JOBS: Job[] = [
 export const COMPANY_INFO = {
   name: 'TalentFlow',
   tagline: 'Transform Your Hiring Process With Smarter, Faster, Data-Driven Technology',
-  description: 'From sourcing to onboarding, our platform streamlines every step. Hire confidently with tools built to reduce bias and boost efficiency.',
+  description: 'TalentFlow is a mini yet industry-grade hiring platform. Design job listings, manage a high‑volume candidate pipeline, build rich assessments, and preview results — all with instant feedback, optimistic UI and offline‑ready storage. Built with React, TypeScript, Tailwind, MSW and Dexie to feel like a real app even without a server.',
 };
