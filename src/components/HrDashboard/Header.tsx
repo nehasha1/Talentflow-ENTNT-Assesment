@@ -230,8 +230,8 @@ const Header: React.FC = () => {
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          {/* <button
+          {/* Mobile menu button 
+          { <button
             className="md:hidden p-2 rounded-md text-gray-700 hover:text-emerald-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             onClick={toggleMenu}
           >
@@ -257,7 +257,7 @@ const Header: React.FC = () => {
                 />
               )}
             </svg>
-          </button> */}
+          </button> }*/}
         </div>
 
         {/* Mobile Navigation
